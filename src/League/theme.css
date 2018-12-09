@@ -1,0 +1,37 @@
+.root {
+    -fx-background-image: url("backs/background.jpg");
+    /*-fx-background-color: aquamarine;*/
+    -fx-background-position: center center;
+    -fx-background-radius: 20;
+    -fx-background-repeat: stretch;
+    -fx-border-radius: 20;
+    /*-fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);*/
+    /*-fx-font-style: normal;*/
+    /*-fx-font-weight: 300;*/
+    /*-fx-text-alignment: center;*/
+    -icons-color: red;
+}
+
+.button {
+    -fx-font-family: Calibri;
+    -fx-font-size: 14;
+}
+
+.button:hover {
+    -fx-text-fill: #ff9600;
+    /*-fx-graphic: red;*/
+    -fx-background-color: #ff9600;
+}
+
+.button:hover .glyph-icon {
+    -fx-fill: #ff9600;
+    /*-fx-effect: innershadow( three-pass-box , derive(-icons-color,-70%) , 0.1em, 0.0 , 0.07em, 0.07em );*/
+    /*-fx-fill: linear-gradient(-icons-color 0%, derive(-icons-color-, 100%) 30%, derive(blueviolet, 30%) 85%);*/
+}
+
+.label {
+    -fx-font-family: Calibri, sans-serif;
+    -fx-font-size: 14;
+    -fx-font-weight: bold;
+    /*-fx-text-fill: #0E1D33;*/
+}
