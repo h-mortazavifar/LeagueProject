@@ -1,11 +1,15 @@
 package League;
 
 import com.jfoenix.controls.*;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
@@ -16,19 +20,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class Controller implements Initializable {
 
@@ -63,10 +64,10 @@ public class Controller implements Initializable {
     public JFXButton current6;
     public Label songName;
     public JFXButton folderBrowser;
-    public JFXScrollPane initializingTeams;
+    public JFXScrollPane initializingTeamsScroll;
     public JFXButton teamsInitialized;
     public AnchorPane teamsDataImport;
-    public StackPane dilogue;
+    public StackPane dialogue;
     private int count = 0;
     private int numberOfTeams;
     private FileManager fileManagerClass = new FileManager();
@@ -77,6 +78,7 @@ public class Controller implements Initializable {
     private final List<MediaPlayer> players = new ArrayList<>();
     private JFXDialog jfxDialog;
     private static ArrayList<League> leagues = new ArrayList<League>();
+    Label teamScrollBarTop = new Label("ایجاد تیم ها");
     //    private int slideshowCount;
 //    private StackPane stackPane = new StackPane();
 
@@ -101,27 +103,49 @@ public class Controller implements Initializable {
         newLeaguePage.setVisible(true);
     }
 
-    public void setNewLeague() throws MalformedURLException {
-        String name = nameOfLeague.getText();
-        Date inputDate = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
-        numberOfTeams = Integer.parseInt(teamsNum.getText());
+    public void setNewLeague() throws Exception{
+        String name = null;
+        Date inputDate = null;
+        try {
+            name = nameOfLeague.getText();
+            inputDate = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
+            numberOfTeams = Integer.parseInt(teamsNum.getText());
+        } catch (Exception e) {
+            getJfxDialog("در ورود اطلاعات دچار اشتباه شدید", "لطفا مقدار صحیح وارد کنید");
+            e.printStackTrace();
+        }
         if (count < 6) {
             leagues.add(new League(name, numberOfTeams, inputDate));
         }
         newLeaguePage.setVisible(false);
         fadeOut();
         VBox content = new VBox();
-        initializingTeams.setContent(content);
-        content.setSpacing(20);
+        content.setPrefWidth(200);
+        content.setSpacing(10);
+        teamScrollBarTop.setTextFill(Color.WHITE);
+        initializingTeamsScroll.setContent(content);
+        initializingTeamsScroll.getBottomBar().getChildren().add(teamScrollBarTop);
+        JFXScrollPane.smoothScrolling((ScrollPane) initializingTeamsScroll.getChildren().get(0));
         for (int i = 0; i < numberOfTeams; i++) {
+            HBox hBox = new HBox();
+            hBox.setSpacing(20);
+            hBox.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+            content.getChildren().add(hBox);
+            MaterialDesignIconView iconView = new MaterialDesignIconView(MaterialDesignIcon.FILE);
+            JFXButton getIcon = new JFXButton("دریافت آیکن");
+            getIcon.setGraphic(iconView);
+            getIcon.setId("team" + i);
+            hBox.getChildren().add(getIcon);
             JFXTextField teamName = new JFXTextField();
-            teamName.setPromptText("نام تیم " + i + 1);
+            teamName.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+            teamName.setPromptText("نام تیم " + (i + 1));
             teamName.setId(teamName + String.valueOf(i));
-            content.getChildren().add(teamName);
+            hBox.getChildren().add(teamName);
             JFXTextField howManyTeams = new JFXTextField();
-            howManyTeams.setPromptText("تعداد بازیکن های تیم " + i + 1);
+            howManyTeams.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+            howManyTeams.setPromptText("تعداد بازیکن های تیم " + (i + 1));
             howManyTeams.setId(howManyTeams + String.valueOf(i));
-            content.getChildren().add(howManyTeams);
+            hBox.getChildren().add(howManyTeams);
         }
         fadeIn();
         teamsDataImport.setVisible(true);
@@ -166,9 +190,11 @@ public class Controller implements Initializable {
     @FXML
     private void getJfxDialog(String heading, String body) {
         JFXDialogLayout dialogContent = new JFXDialogLayout();
+        dialogContent.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         dialogContent.setHeading(new Text(heading));
         dialogContent.setBody(new Text(body));
-        jfxDialog = new JFXDialog(dilogue, dialogContent, JFXDialog.DialogTransition.CENTER);
+        dialogContent.setMaxSize(200,100);
+        jfxDialog = new JFXDialog(dialogue, dialogContent, JFXDialog.DialogTransition.CENTER);
         JFXButton closeButton = new JFXButton("باشه");
         closeButton.setOnAction(event -> jfxDialog.close());
         dialogContent.setActions(closeButton);
