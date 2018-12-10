@@ -5,12 +5,14 @@ import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -50,9 +52,7 @@ public class Controller implements Initializable {
     public JFXButton fileBrowser;
     public JFXButton next;
     public HBox horizonPlayBox;
-    public AnchorPane mainBack;
     public Label Path;
-    public JFXToggleButton playPauseButton;
     public JFXButton reports;
     public JFXButton current1;
     public JFXButton current2;
@@ -63,6 +63,8 @@ public class Controller implements Initializable {
     public Label songName;
     public JFXButton folderBrowser;
     public JFXScrollPane initializingTeams;
+    public JFXButton teamsInitialized;
+    public AnchorPane teamsDataImport;
     //    private int slideshowCount;
     private int count = 0;
     private int numberOfTeams;
@@ -87,21 +89,39 @@ public class Controller implements Initializable {
         fadeOut();
         forStartLine.setVisible(false);
         fadeOut();
+        teamsDataImport.setVisible(false);
+        fadeOut();
         fadeIn();
         newLeaguePage.setVisible(true);
     }
 
     public void setNewLeague() throws MalformedURLException {
+
         String name = nameOfLeague.getText();
         Date inputDate = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
         numberOfTeams = Integer.parseInt(teamsNum.getText());
         if (count < 6) {
             leagues.add(new League(name, numberOfTeams, inputDate));
         }
-        for (int i = 0; i <numberOfTeams ; i++) {
-//            initializingTeams.;
+        newLeaguePage.setVisible(false);
+        fadeOut();
+        VBox content = new VBox();
+        initializingTeams.setContent(content);
+        content.setSpacing(20);
+        for (int i = 0; i < numberOfTeams; i++) {
+            JFXTextField teamName = new JFXTextField();
+            teamName.setPromptText("نام تیم "+ i);
+            teamName.setId(teamName + String.valueOf(i));
+            content.getChildren().add(teamName);
+            JFXTextField howManyTeams = new JFXTextField();
+            howManyTeams.setPromptText("تعداد بازیکن های تیم "+ i);
+            howManyTeams.setId(howManyTeams + String.valueOf(i));
+            content.getChildren().add(howManyTeams);
         }
+        fadeIn();
+        teamsDataImport.setVisible(true);
         count++;
+//        should change to work for every button
         current1.setText(name);
     }
 
