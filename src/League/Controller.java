@@ -26,6 +26,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.ZoneId;
@@ -103,14 +104,14 @@ public class Controller implements Initializable {
         newLeaguePage.setVisible(true);
     }
 
-    public void setNewLeague() throws Exception{
+    public void setNewLeague() throws NullPointerException, MalformedURLException {
         String name = null;
         Date inputDate = null;
         try {
             name = nameOfLeague.getText();
             inputDate = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
             numberOfTeams = Integer.parseInt(teamsNum.getText());
-        } catch (Exception e) {
+        } catch (NullPointerException e) {
             getJfxDialog("در ورود اطلاعات دچار اشتباه شدید", "لطفا مقدار صحیح وارد کنید");
             e.printStackTrace();
         }
@@ -193,7 +194,7 @@ public class Controller implements Initializable {
         dialogContent.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         dialogContent.setHeading(new Text(heading));
         dialogContent.setBody(new Text(body));
-        dialogContent.setMaxSize(200,100);
+        dialogContent.setMaxSize(300,150);
         jfxDialog = new JFXDialog(dialogue, dialogContent, JFXDialog.DialogTransition.CENTER);
         JFXButton closeButton = new JFXButton("باشه");
         closeButton.setOnAction(event -> jfxDialog.close());

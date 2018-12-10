@@ -15,111 +15,115 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.CubicCurve?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" stylesheets="@theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="League.Controller">
-    <children>
-        <JFXButton fx:id="continueToTeams" buttonType="RAISED" graphicTextGap="5.0" layoutX="675.0" layoutY="108.0" onAction="#setNewLeagueVisible" style="-fx-background-color: aquamarine;" text="ایجاد لیگ جدید" textAlignment="CENTER">
-            <graphic>
-                <MaterialDesignIconView glyphName="PLUS" size="15" />
-            </graphic>
-        </JFXButton>
-        <Label fx:id="topWelcomeHint" alignment="CENTER" contentDisplay="CENTER" layoutX="144.0" layoutY="99.0" style="-fx-font-size: 30; -fx-background-color: white; -fx-background-radius: 10; -fx-label-padding: 5;" text="سلام، به برنامه مدیریت لیگ فوتبال خوش آمدید" textAlignment="CENTER" />
-        <AnchorPane fx:id="newLeaguePage" layoutX="127.0" layoutY="94.0" opacity="0.9" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
-            <children>
-                <Label alignment="CENTER" layoutX="214.0" layoutY="49.0" style="-fx-font-size: 20;" text="ایجاد لیگ جدید" textAlignment="CENTER" />
-                <JFXDatePicker fx:id="startDate" layoutX="174.0" layoutY="237.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" promptText="تاریخ شروع" />
-                <JFXTextField fx:id="nameOfLeague" layoutX="174.0" layoutY="127.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" promptText="نام" />
-                <JFXTextField fx:id="teamsNum" layoutX="174.0" layoutY="181.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" promptText="تیم های حاضر" />
-                <JFXButton fx:id="goOn" alignment="CENTER" buttonType="RAISED" layoutX="228.0" layoutY="315.0" onAction="#setNewLeague" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ادامه" textAlignment="CENTER" />
-            </children>
-        </AnchorPane>
-        <Label fx:id="hintForStart" layoutX="248.0" layoutY="183.0" style="-fx-font-size: 25; -fx-background-radius: 20;" text="برای شروع روی این دکمه کلیک کنید" textAlignment="CENTER" textFill="WHITE" />
-        <CubicCurve fx:id="forStartLine" controlX1="-75.5" controlX2="83.5" controlY1="64.0" controlY2="83.5" endX="159.0" endY="-82.0" fill="#ffffff00" layoutX="509.0" layoutY="218.0" startX="-134.0" startY="-5.0" stroke="WHITE" />
-        <HBox fx:id="horizonPlayBox" alignment="CENTER_LEFT" layoutX="14.0" layoutY="542.0" prefHeight="25.0" prefWidth="774.0" style="-fx-spacing: 10; -fx-background-radius: 20; -fx-padding: 10; -fx-background-color: rgba(98,124,122,0.8);">
-            <children>
-                <JFXButton fx:id="playPause" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#playPause" onMouseClicked="#Close" style="-fx-background-color: white;" textAlignment="CENTER">
-                    <graphic>
-                        <MaterialDesignIconView glyphName="PLAY_PAUSE" size="15" />
-                    </graphic>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </JFXButton>
-                <JFXButton fx:id="fileBrowser" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="88.0" layoutY="10.0" onAction="#browseButton" onMouseClicked="#Close" style="-fx-background-color: white;" textAlignment="CENTER">
-                    <graphic>
-                        <MaterialDesignIconView glyphName="FILE_MUSIC" size="15" />
-                    </graphic>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </JFXButton>
-                <JFXSlider fx:id="seekSlider" prefHeight="14.0" prefWidth="169.0" value="1.0" />
-                <JFXSlider fx:id="volumeSlider" max="50.0" prefHeight="23.0" prefWidth="14.0" />
-                <Label fx:id="playTime" text="Time" textFill="WHITE" visible="false" />
-                <Label fx:id="durationLabel" text="Durat" textFill="WHITE" visible="false" />
-                <Label fx:id="Path" maxWidth="163.0" prefHeight="17.0" prefWidth="323.0" style="-fx-max-width: 300;" text="Path" textFill="WHITE" visible="false" />
-            </children>
-            <opaqueInsets>
-                <Insets />
-            </opaqueInsets>
-        </HBox>
-        <VBox fx:id="LeaguesBar" layoutX="675.0" layoutY="158.0" prefHeight="285.0" prefWidth="116.0" style="-fx-background-color: rgba(98,124,122,0.8); -fx-spacing: 20; -fx-padding: 10; -fx-background-radius: 20;">
-            <children>
-                <JFXButton fx:id="current1" contentDisplay="CENTER" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
-                <JFXButton fx:id="current2" contentDisplay="CENTER" layoutX="20.0" layoutY="20.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
-                <JFXButton fx:id="current3" contentDisplay="CENTER" layoutX="20.0" layoutY="67.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
-                <JFXButton fx:id="current4" contentDisplay="CENTER" layoutX="20.0" layoutY="114.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
-                <JFXButton fx:id="current5" contentDisplay="CENTER" layoutX="20.0" layoutY="161.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
-                <JFXButton fx:id="current6" contentDisplay="CENTER" layoutX="20.0" layoutY="208.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
-            </children>
-        </VBox>
-        <Label fx:id="songName" disable="true" layoutX="14.0" layoutY="521.0" maxWidth="163.0" prefHeight="17.0" prefWidth="163.0" style="-fx-max-width: 300;" text="Name of the song" textFill="WHITE" visible="false" />
-        <HBox disable="true" layoutX="290.0" layoutY="421.0" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 10;" visible="false">
-            <children>
-                <JFXButton fx:id="next" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#next" onMouseClicked="#Close" style="-fx-background-color: white;" text="next" textAlignment="CENTER">
-                    <graphic>
-                        <MaterialDesignIconView glyphName="SKIP_NEXT" size="15" />
-                    </graphic>
-                </JFXButton>
-                <JFXButton fx:id="folderBrowser" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#openFolderButton" onMouseClicked="#Close" style="-fx-background-color: white;" text="folder" textAlignment="CENTER">
-                    <graphic>
-                        <MaterialDesignIconView glyphName="FOLDER" size="15" />
-                    </graphic>
-                    <cursor>
-                        <Cursor fx:constant="HAND" />
-                    </cursor>
-                </JFXButton>
-                <JFXButton fx:id="previous" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#previous" onMouseClicked="#Close" style="-fx-background-color: white;" text="previous" textAlignment="CENTER">
-                    <graphic>
-                        <MaterialDesignIconView glyphName="SKIP_PREVIOUS" size="15" />
-                    </graphic>
-                </JFXButton>
-            </children>
-        </HBox>
-      <AnchorPane fx:id="teamsDataImport" layoutX="126.0" layoutY="94.0" opacity="0.9" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
-         <children>
-            <JFXScrollPane fx:id="initializingTeamsScroll" layoutX="56.0" layoutY="-1.0" prefHeight="351.0" prefWidth="436.0" style="-fx-background-color: #f1f1f1; -fx-alignment: center;" />
-            <JFXButton fx:id="teamsInitialized" alignment="CENTER" buttonType="RAISED" layoutX="229.0" layoutY="367.0" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ادامه" textAlignment="CENTER" />
-         </children>
+
+<StackPane fx:id="dialogue" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="League.Controller">
+   <children>
+      <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" stylesheets="@theme.css">
+          <children>
+              <JFXButton fx:id="continueToTeams" buttonType="RAISED" graphicTextGap="5.0" layoutX="675.0" layoutY="108.0" onAction="#setNewLeagueVisible" style="-fx-background-color: aquamarine;" text="ایجاد لیگ جدید" textAlignment="CENTER">
+                  <graphic>
+                      <MaterialDesignIconView glyphName="PLUS" size="15" />
+                  </graphic>
+              </JFXButton>
+              <Label fx:id="topWelcomeHint" alignment="CENTER" contentDisplay="CENTER" layoutX="144.0" layoutY="99.0" style="-fx-font-size: 30; -fx-background-color: white; -fx-background-radius: 10; -fx-label-padding: 5;" text="سلام، به برنامه مدیریت لیگ فوتبال خوش آمدید" textAlignment="CENTER" />
+              <AnchorPane fx:id="newLeaguePage" layoutX="127.0" layoutY="94.0" opacity="0.9" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
+                  <children>
+                      <Label alignment="CENTER" layoutX="214.0" layoutY="49.0" style="-fx-font-size: 20;" text="ایجاد لیگ جدید" textAlignment="CENTER" />
+                      <JFXDatePicker fx:id="startDate" layoutX="174.0" layoutY="237.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" promptText="تاریخ شروع" />
+                      <JFXTextField fx:id="nameOfLeague" layoutX="174.0" layoutY="127.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" promptText="نام" />
+                      <JFXTextField fx:id="teamsNum" layoutX="174.0" layoutY="181.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" promptText="تیم های حاضر" />
+                      <JFXButton fx:id="goOn" alignment="CENTER" buttonType="RAISED" layoutX="228.0" layoutY="315.0" onAction="#setNewLeague" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ادامه" textAlignment="CENTER" />
+                  </children>
+              </AnchorPane>
+              <Label fx:id="hintForStart" layoutX="248.0" layoutY="183.0" style="-fx-font-size: 25; -fx-background-radius: 20;" text="برای شروع روی این دکمه کلیک کنید" textAlignment="CENTER" textFill="WHITE" />
+              <CubicCurve fx:id="forStartLine" controlX1="-75.5" controlX2="83.5" controlY1="64.0" controlY2="83.5" endX="159.0" endY="-82.0" fill="#ffffff00" layoutX="509.0" layoutY="218.0" startX="-134.0" startY="-5.0" stroke="WHITE" />
+              <HBox fx:id="horizonPlayBox" alignment="CENTER_LEFT" layoutX="14.0" layoutY="542.0" prefHeight="25.0" prefWidth="774.0" style="-fx-spacing: 10; -fx-background-radius: 20; -fx-padding: 10; -fx-background-color: rgba(98,124,122,0.8);">
+                  <children>
+                      <JFXButton fx:id="playPause" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#playPause" onMouseClicked="#Close" style="-fx-background-color: white;" textAlignment="CENTER">
+                          <graphic>
+                              <MaterialDesignIconView glyphName="PLAY_PAUSE" size="15" />
+                          </graphic>
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                      </JFXButton>
+                      <JFXButton fx:id="fileBrowser" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="88.0" layoutY="10.0" onAction="#browseButton" onMouseClicked="#Close" style="-fx-background-color: white;" textAlignment="CENTER">
+                          <graphic>
+                              <MaterialDesignIconView glyphName="FILE_MUSIC" size="15" />
+                          </graphic>
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                      </JFXButton>
+                      <JFXSlider fx:id="seekSlider" prefHeight="14.0" prefWidth="169.0" value="1.0" />
+                      <JFXSlider fx:id="volumeSlider" max="50.0" prefHeight="23.0" prefWidth="14.0" />
+                      <Label fx:id="playTime" text="Time" textFill="WHITE" visible="false" />
+                      <Label fx:id="durationLabel" text="Durat" textFill="WHITE" visible="false" />
+                      <Label fx:id="Path" maxWidth="163.0" prefHeight="17.0" prefWidth="323.0" style="-fx-max-width: 300;" text="Path" textFill="WHITE" visible="false" />
+                  </children>
+                  <opaqueInsets>
+                      <Insets />
+                  </opaqueInsets>
+              </HBox>
+              <VBox fx:id="LeaguesBar" layoutX="675.0" layoutY="158.0" prefHeight="285.0" prefWidth="116.0" style="-fx-background-color: rgba(98,124,122,0.8); -fx-spacing: 20; -fx-padding: 10; -fx-background-radius: 20;">
+                  <children>
+                      <JFXButton fx:id="current1" contentDisplay="CENTER" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
+                      <JFXButton fx:id="current2" contentDisplay="CENTER" layoutX="20.0" layoutY="20.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
+                      <JFXButton fx:id="current3" contentDisplay="CENTER" layoutX="20.0" layoutY="67.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
+                      <JFXButton fx:id="current4" contentDisplay="CENTER" layoutX="20.0" layoutY="114.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
+                      <JFXButton fx:id="current5" contentDisplay="CENTER" layoutX="20.0" layoutY="161.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
+                      <JFXButton fx:id="current6" contentDisplay="CENTER" layoutX="20.0" layoutY="208.0" prefHeight="25.0" prefWidth="117.0" style="-fx-background-color: #f1f1f1;" text="لیگ کنونی" visible="false" />
+                  </children>
+              </VBox>
+              <Label fx:id="songName" disable="true" layoutX="14.0" layoutY="521.0" maxWidth="163.0" prefHeight="17.0" prefWidth="163.0" style="-fx-max-width: 300;" text="Name of the song" textFill="WHITE" visible="false" />
+              <HBox disable="true" layoutX="290.0" layoutY="421.0" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 10;" visible="false">
+                  <children>
+                      <JFXButton fx:id="next" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#next" onMouseClicked="#Close" style="-fx-background-color: white;" text="next" textAlignment="CENTER">
+                          <graphic>
+                              <MaterialDesignIconView glyphName="SKIP_NEXT" size="15" />
+                          </graphic>
+                      </JFXButton>
+                      <JFXButton fx:id="folderBrowser" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#openFolderButton" onMouseClicked="#Close" style="-fx-background-color: white;" text="folder" textAlignment="CENTER">
+                          <graphic>
+                              <MaterialDesignIconView glyphName="FOLDER" size="15" />
+                          </graphic>
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                      </JFXButton>
+                      <JFXButton fx:id="previous" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#previous" onMouseClicked="#Close" style="-fx-background-color: white;" text="previous" textAlignment="CENTER">
+                          <graphic>
+                              <MaterialDesignIconView glyphName="SKIP_PREVIOUS" size="15" />
+                          </graphic>
+                      </JFXButton>
+                  </children>
+              </HBox>
+            <AnchorPane fx:id="teamsDataImport" layoutX="126.0" layoutY="94.0" opacity="0.9" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
+               <children>
+                  <JFXScrollPane fx:id="initializingTeamsScroll" layoutX="56.0" layoutY="-1.0" prefHeight="351.0" prefWidth="436.0" style="-fx-background-color: #f1f1f1; -fx-alignment: center;" />
+                  <JFXButton fx:id="teamsInitialized" alignment="CENTER" buttonType="RAISED" layoutX="229.0" layoutY="367.0" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ادامه" textAlignment="CENTER" />
+               </children>
+            </AnchorPane>
+            <HBox layoutX="14.0" layoutY="14.0" prefHeight="14.0" prefWidth="284.0" style="-fx-spacing: 10;">
+               <children>
+                    <JFXButton fx:id="closeButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#Close" style="-fx-background-color: white;" text="بستن" textAlignment="CENTER">
+                        <graphic>
+                            <MaterialDesignIconView glyphName="WINDOW_CLOSE" size="15" />
+                        </graphic>
+                    </JFXButton>
+                  <JFXButton fx:id="matchMaker" alignment="CENTER" buttonType="RAISED" disable="true" layoutX="83.0" layoutY="10.0" style="-fx-background-color: white;" text="مسابقه" textAlignment="CENTER">
+                     <graphic>
+                        <MaterialDesignIconView glyphName="GAMEPAD_VARIANT" size="15" />
+                     </graphic>
+                  </JFXButton>
+                    <JFXButton fx:id="reports" alignment="CENTER" buttonType="RAISED" disable="true" style="-fx-background-color: white;" text="گزارش ها" textAlignment="CENTER">
+                        <graphic>
+                            <MaterialDesignIconView glyphName="TRENDING_UP" size="15" />
+                        </graphic>
+                    </JFXButton>
+               </children>
+            </HBox>
+          </children>
       </AnchorPane>
-      <HBox layoutX="14.0" layoutY="14.0" prefHeight="14.0" prefWidth="284.0" style="-fx-spacing: 10;">
-         <children>
-              <JFXButton fx:id="closeButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#Close" style="-fx-background-color: white;" text="بستن" textAlignment="CENTER">
-                  <graphic>
-                      <MaterialDesignIconView glyphName="WINDOW_CLOSE" size="15" />
-                  </graphic>
-              </JFXButton>
-            <JFXButton fx:id="matchMaker" alignment="CENTER" buttonType="RAISED" disable="true" layoutX="83.0" layoutY="10.0" style="-fx-background-color: white;" text="مسابقه" textAlignment="CENTER">
-               <graphic>
-                  <MaterialDesignIconView glyphName="GAMEPAD_VARIANT" size="15" />
-               </graphic>
-            </JFXButton>
-              <JFXButton fx:id="reports" alignment="CENTER" buttonType="RAISED" disable="true" style="-fx-background-color: white;" text="گزارش ها" textAlignment="CENTER">
-                  <graphic>
-                      <MaterialDesignIconView glyphName="TRENDING_UP" size="15" />
-                  </graphic>
-              </JFXButton>
-         </children>
-      </HBox>
-      <StackPane fx:id="dialogue" layoutX="247.0" layoutY="236.0" prefHeight="130.0" prefWidth="306.0" />
-    </children>
-</AnchorPane>
+   </children>
+</StackPane>
