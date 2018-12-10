@@ -6,70 +6,74 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
 public class League {
     private String name;
     private int howManyTeams;
-    private static Team[] teams;
-    private String currentDate;
-    private Scanner in = new Scanner(System.in);
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static ArrayList<Team> teams;
+    private Date startDate;
+//    private Scanner in = new Scanner(System.in);
+//    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public League(String name, int howManyTeams, String date) throws MalformedURLException, ParseException {
-        setTeams();
-        setCurrentDate(date);
-        this.teams = getTeams();
-        Boolean compareCurrentDate = compareCurrentDate();
-        if (compareCurrentDate) {
-            this.name = name;
-            this.howManyTeams = howManyTeams;
-        }
+    public League(String name, int howManyTeams, Date startDate) throws MalformedURLException {
+//        setTeams();
+        setStartDate(startDate);
+        teams = getTeams();
+        setName(name);
+        setHowManyTeams(howManyTeams);
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) throws ParseException {
+    public void setName(String name) {
         if (compareCurrentDate())
             this.name = name;
     }
 
-    public Boolean compareCurrentDate() throws ParseException {
-//        currentDate = new Date();
-        Date today = dateFormat.parse(dateFormat.format(new Date()));
-        int parseToday = Integer.parseInt(String.valueOf(today));
-        int parseInput = Integer.parseInt(getCurrentDate());
-        return parseInput > parseToday;
+    public Boolean compareCurrentDate() {
+//        Date today = dateFormat.parse(dateFormat.format(new Date()));
+        Date today = new Date();
+//        int parseToday = Integer.parseInt(String.valueOf(today));
+//        int parseInput = Integer.parseInt(getStartDate());
+        return startDate.after(today);
     }
 
-    public String getCurrentDate() {
-        return currentDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setCurrentDate(String date) throws ParseException {
-        date = String.valueOf(dateFormat.parse(date));
-        this.currentDate = date;
+    public void setStartDate(Date date) {
+//        date = String.valueOf(dateFormat.parse(date));
+        this.startDate = date;
     }
 
-    public Team[] getTeams() {
+    public ArrayList<Team> getTeams() {
         return teams;
     }
 
-    public void setTeams() throws MalformedURLException {
+    public void setTeams(String name, int playerNum, Image image) {
         for (int i = 0; i < howManyTeams; i++) {
-            String name = in.next();
-            int playerNum = in.nextInt();
-            Image image = new Image(new File("C:\\Users\\user\\Desktop\\x.jpg").toURI().toURL().toExternalForm());
+//            String name = in.next();
+//            int playerNum = in.nextInt();
+//            Image image = new Image(new File("C:\\Users\\user\\Desktop\\x.jpg").toURI().toURL().toExternalForm());
             Team team = new Team(name, playerNum, image);
-            teams[i] = team;
+            teams.add(team);
         }
     }
 
     public Team getTeam(int i) {
-        return teams[i];
+        return teams.get(i);
+    }
+
+    public void setHowManyTeams(int howManyTeams) {
+        if (compareCurrentDate()) {
+            this.howManyTeams = howManyTeams;
+        }
     }
 
     public int getHowManyTeams() {

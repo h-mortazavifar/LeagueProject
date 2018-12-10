@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -24,8 +26,19 @@ public class Main extends Application {
             primaryStage.setY(event.getScreenY() - yOffset);
         });
         Scene scene = new Scene(root, 800, 600);
+//        for rounded corners of scene while there is no background
+        scene.setFill(Color.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.TRANSPARENT);
+//        for removing title bar of scene
+//        primaryStage.initStyle(StageStyle.UNDECORATED);
+
+//        round corners with a background:
+        Rectangle rect = new Rectangle(800,600);
+        rect.setArcHeight(60.0);
+        rect.setArcWidth(60.0);
+        root.setClip(rect);
+
         scene.getStylesheets().add(Main.class.getResource("theme.css").toExternalForm());
-        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Purple League");
 //        primaryStage.getIcons();
