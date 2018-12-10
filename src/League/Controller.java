@@ -5,18 +5,19 @@ import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.shape.CubicCurve;
+import javafx.scene.text.Text;
 import javafx.util.Duration;
 
 import java.io.File;
@@ -30,7 +31,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-    private static ArrayList<League> leagues = new ArrayList<League>();
+
     public JFXTextField teamsNum;
     public JFXDatePicker startDate;
     public JFXButton continueToTeams;
@@ -65,7 +66,7 @@ public class Controller implements Initializable {
     public JFXScrollPane initializingTeams;
     public JFXButton teamsInitialized;
     public AnchorPane teamsDataImport;
-    //    private int slideshowCount;
+    public StackPane dilogue;
     private int count = 0;
     private int numberOfTeams;
     private FileManager fileManagerClass = new FileManager();
@@ -74,6 +75,11 @@ public class Controller implements Initializable {
     private String path;
     private Double totalTimeOfMusic;
     private final List<MediaPlayer> players = new ArrayList<>();
+    private JFXDialog jfxDialog;
+    private static ArrayList<League> leagues = new ArrayList<League>();
+    //    private int slideshowCount;
+//    private StackPane stackPane = new StackPane();
+
 
     public void Close(MouseEvent event) {
 //        Thread.sleep(600);
@@ -96,7 +102,6 @@ public class Controller implements Initializable {
     }
 
     public void setNewLeague() throws MalformedURLException {
-
         String name = nameOfLeague.getText();
         Date inputDate = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
         numberOfTeams = Integer.parseInt(teamsNum.getText());
@@ -110,19 +115,64 @@ public class Controller implements Initializable {
         content.setSpacing(20);
         for (int i = 0; i < numberOfTeams; i++) {
             JFXTextField teamName = new JFXTextField();
-            teamName.setPromptText("نام تیم "+ i);
+            teamName.setPromptText("نام تیم " + i + 1);
             teamName.setId(teamName + String.valueOf(i));
             content.getChildren().add(teamName);
             JFXTextField howManyTeams = new JFXTextField();
-            howManyTeams.setPromptText("تعداد بازیکن های تیم "+ i);
+            howManyTeams.setPromptText("تعداد بازیکن های تیم " + i + 1);
             howManyTeams.setId(howManyTeams + String.valueOf(i));
             content.getChildren().add(howManyTeams);
         }
         fadeIn();
         teamsDataImport.setVisible(true);
+        switch (count) {
+            case 0:
+                fadeIn();
+                current1.setVisible(true);
+                current1.setText(name);
+                break;
+            case 1:
+                fadeIn();
+                current2.setVisible(true);
+                current2.setText(name);
+                break;
+            case 2:
+                fadeIn();
+                current3.setVisible(true);
+                current3.setText(name);
+                break;
+            case 3:
+                fadeIn();
+                current4.setVisible(true);
+                current4.setText(name);
+                break;
+            case 4:
+                fadeIn();
+                current5.setVisible(true);
+                current5.setText(name);
+                break;
+            case 5:
+                fadeIn();
+                current6.setVisible(true);
+                current6.setText(name);
+                break;
+            default:
+                getJfxDialog("بیش از حد مجاز", "شما امکان ایجاد تنها 6 لیگ را دارید.");
+        }
         count++;
 //        should change to work for every button
-        current1.setText(name);
+    }
+
+    @FXML
+    private void getJfxDialog(String heading, String body) {
+        JFXDialogLayout dialogContent = new JFXDialogLayout();
+        dialogContent.setHeading(new Text(heading));
+        dialogContent.setBody(new Text(body));
+        jfxDialog = new JFXDialog(dilogue, dialogContent, JFXDialog.DialogTransition.CENTER);
+        JFXButton closeButton = new JFXButton("باشه");
+        closeButton.setOnAction(event -> jfxDialog.close());
+        dialogContent.setActions(closeButton);
+        jfxDialog.show();
     }
 
     //    Make a fade transition
