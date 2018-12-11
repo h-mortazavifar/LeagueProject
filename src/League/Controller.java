@@ -14,7 +14,10 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -23,12 +26,16 @@ import javafx.scene.shape.CubicCurve;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.ZoneId;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
@@ -77,13 +84,13 @@ public class Controller implements Initializable {
     private final List<MediaPlayer> players = new ArrayList<>();
     private JFXDialog jfxDialog;
     private static ArrayList<League> leagues = new ArrayList<League>();
-    Label teamScrollBarTop = new Label("ایجاد تیم ها");
-    ArrayList<Object> arrayOfTeamListObjects = new ArrayList<>();
-    String addressOfIcons;
+    private Label teamScrollBarTop = new Label("ایجاد تیم ها");
+//    private Object[][] objectsOfTeamsList;
+    private JFXTextField[] teamNames;
+    private JFXTextField[] teamPlayerNumbers;
+    private String[] iconsAddress;
+    private String addressOfIcon;
     //    private int slideshowCount;
-//    private StackPane stackPane = new StackPane();
-
-
     public void Close(MouseEvent event) {
 //        Thread.sleep(600);
         if (event.getSource() == closeButton) {
@@ -104,7 +111,7 @@ public class Controller implements Initializable {
         newLeaguePage.setVisible(true);
     }
 
-    public void setNewLeague() throws NullPointerException, MalformedURLException {
+    public void setNewLeague() throws NullPointerException {
         String name = null;
         Date inputDate = null;
         try {
@@ -115,6 +122,10 @@ public class Controller implements Initializable {
             getJfxDialog("اشتباه در ورود اطلاعات", "لطفا مقدار صحیح وارد کنید");
             e.printStackTrace();
         }
+//        objectsOfTeamsList = new Object[numberOfTeams][3];
+        teamNames= new JFXTextField[numberOfTeams];
+        teamPlayerNumbers = new JFXTextField[numberOfTeams];
+        iconsAddress = new String[numberOfTeams];
         if (count < 6) {
             leagues.add(new League(name, numberOfTeams, inputDate));
         }
@@ -139,28 +150,34 @@ public class Controller implements Initializable {
             getIconButton.setGraphic(iconView);
             getIconButton.setId("team" + i);
             getIconButton.setStyle("-fx-background-color:WHITE;");
+            getIconButton.setPrefWidth(100);
             int finalI = i;
             getIconButton.setOnAction(event -> {
-                addressOfIcons = fileManagerClass.getFilesPath();
-                if (addressOfIcons != null)
-                    arrayOfTeamListObjects.add(finalI, addressOfIcons);
+                addressOfIcon = fileManagerClass.getFilesPath();
+                if (addressOfIcon != null) {
+                    getIconButton.setText("اضافه شد");
+                    getIconButton.setDisable(true);
+                    getIconButton.setGraphic(null);
+                    iconsAddress[finalI] = addressOfIcon;
+                    System.out.println(iconsAddress[finalI]);
+//                    برای تغییر آیکن بعد از دادن آدرس اقدام شود
+//                    getIconButton.setGraphic(new ImageView(new Image(getClass().getResourceAsStream("League/backs/2.jpg"))));
+                }
             });
-            arrayOfTeamListObjects.add(i, getIconButton);
             hBox.getChildren().add(getIconButton);
             JFXTextField teamName = new JFXTextField();
             teamName.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
             teamName.setPromptText("نام تیم " + (i + 1));
             teamName.setId(teamName + String.valueOf(i));
-            arrayOfTeamListObjects.add(i, teamName);
+            teamNames[i] = teamName;
             hBox.getChildren().add(teamName);
-            JFXTextField howManyTeams = new JFXTextField();
-            howManyTeams.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-            howManyTeams.setPromptText("تعداد بازیکن های تیم " + (i + 1));
-            howManyTeams.setId(howManyTeams + String.valueOf(i));
-            arrayOfTeamListObjects.add(i, howManyTeams);
-            hBox.getChildren().add(howManyTeams);
+            JFXTextField howManyPlayers = new JFXTextField();
+            howManyPlayers.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+            howManyPlayers.setPromptText("تعداد بازیکن های تیم " + (i + 1));
+            howManyPlayers.setId(howManyPlayers + String.valueOf(i));
+            teamPlayerNumbers[i] = howManyPlayers;
+            hBox.getChildren().add(howManyPlayers);
         }
-        System.out.println(Arrays.deepToString(new ArrayList[]{arrayOfTeamListObjects}));
         fadeIn();
         teamsDataImport.setVisible(true);
         switch (count) {
@@ -198,7 +215,13 @@ public class Controller implements Initializable {
                 getJfxDialog("بیش از حد مجاز", "شما امکان ایجاد تنها 6 لیگ را دارید.");
         }
         count++;
-//        should change to work for every button
+    }
+
+    //    get Teams Data And Put It Int teams of leagues! You Know!
+    private void getTeamsData() {
+        for (int i = 0; i <numberOfTeams ; i++) {
+            leagues.get(count).setTeams(teamNames[i].getText(), Integer.parseInt(teamPlayerNumbers[i].getText()), iconsAddress[i]);
+        }
     }
 
     @FXML

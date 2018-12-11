@@ -18,7 +18,7 @@ public class League {
 //    private Scanner in = new Scanner(System.in);
 //    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-    public League(String name, int howManyTeams, Date startDate) throws MalformedURLException {
+    public League(String name, int howManyTeams, Date startDate) {
 //        setTeams();
         setStartDate(startDate);
         teams = getTeams();
@@ -56,12 +56,9 @@ public class League {
         return teams;
     }
 
-    public void setTeams(String name, int playerNum, Image image) {
+    public void setTeams(String teamName, int playerNum, String icon) {
         for (int i = 0; i < howManyTeams; i++) {
-//            String name = in.next();
-//            int playerNum = in.nextInt();
-//            Image image = new Image(new File("C:\\Users\\user\\Desktop\\x.jpg").toURI().toURL().toExternalForm());
-            Team team = new Team(name, playerNum, image);
+            Team team = new Team(teamName, playerNum, icon);
             teams.add(team);
         }
     }

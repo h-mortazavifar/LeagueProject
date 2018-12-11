@@ -9,7 +9,7 @@ public class Team {
     private String name;
     private Player[] players;
     private int howManyPlayers = 14;
-    private Image icon;
+    private String icon;
     private int numOfMatches;
     private double score;
     private int goalsScored;
@@ -19,7 +19,7 @@ public class Team {
     private int draw;
     Scanner in = new Scanner(System.in);
 
-    private Team(String name, Image icon, int howManyPlayers, int numOfMatches, double score,
+    private Team(String name, String icon, int howManyPlayers, int numOfMatches, double score,
                  int goalsScored, int goalsAgainst, int won, int loss, int draw) {
         setHowManyPlayers(howManyPlayers);
         setPlayers();
@@ -35,7 +35,7 @@ public class Team {
         this.draw = draw;
     }
 
-    public Team(String name, int howManyPlayers, Image icon) {
+    public Team(String name, int howManyPlayers, String icon) {
         this(name, icon, howManyPlayers, 0, 0, 0, 0, 0, 0, 0);
     }
 
@@ -69,11 +69,11 @@ public class Team {
             this.howManyPlayers = howManyPlayers;
     }
 
-    public Image getIcon() {
+    public String  getIcon() {
         return icon;
     }
 
-    public void setIcon(Image icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
