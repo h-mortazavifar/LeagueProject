@@ -127,12 +127,12 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mediaView = new MediaView(mediaPlayer);
-//        JFXTreeTableColumn icon = new JFXTreeTableColumn<>("Icon");
-//        icon.setCellValueFactory(new PropertyValueFactory<>("image"));
-//        icon.setPrefWidth(50);
-        JFXTreeTableColumn<TeamsInnerClass, String> icon = new JFXTreeTableColumn<>("Icon");
-        icon.setPrefWidth(100);
-        icon.setCellValueFactory(param -> param.getValue().getValue().icon);
+        JFXTreeTableColumn icon = new JFXTreeTableColumn<>("Icon");
+        icon.setCellValueFactory(new PropertyValueFactory<>("image"));
+        icon.setPrefWidth(50);
+//        JFXTreeTableColumn<TeamsInnerClass, String> icon = new JFXTreeTableColumn<>("Icon");
+//        icon.setPrefWidth(100);
+//        icon.setCellValueFactory(param -> param.getValue().getValue().icon);
         JFXTreeTableColumn<TeamsInnerClass, String> teamName = new JFXTreeTableColumn<>("Team Names");
         teamName.setPrefWidth(100);
         teamName.setCellValueFactory(param -> param.getValue().getValue().teamName);
