@@ -1,18 +1,25 @@
 package League;
 
 import com.jfoenix.controls.*;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.animation.FadeTransition;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.Slider;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -26,9 +33,7 @@ import javafx.scene.shape.CubicCurve;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 
-import javax.swing.*;
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.time.ZoneId;
@@ -74,6 +79,7 @@ public class Controller implements Initializable {
     public JFXButton teamsInitialized;
     public AnchorPane teamsDataImport;
     public StackPane dialogue;
+    public JFXTreeTableView<TeamsInnerClass> scoresTable;
     private int count = 0;
     private int numberOfTeams;
     private FileManager fileManagerClass = new FileManager();
@@ -85,13 +91,86 @@ public class Controller implements Initializable {
     private JFXDialog jfxDialog;
     private static ArrayList<League> leagues = new ArrayList<League>();
     private Label teamScrollBarTop = new Label("ایجاد تیم ها");
-//    private Object[][] objectsOfTeamsList;
     private JFXTextField[] teamNames;
     private JFXTextField[] teamPlayerNumbers;
     private String[] iconsAddress;
     private String addressOfIcon;
     //    private int slideshowCount;
+
+    class TeamsInnerClass extends RecursiveTreeObject<TeamsInnerClass> {
+        StringProperty icon;
+        StringProperty teamName;
+        StringProperty howManyPlayers;
+        StringProperty numOfMatches;
+        StringProperty score;
+        StringProperty goalsScored;
+        StringProperty goalsAgainst;
+        StringProperty won;
+        StringProperty loss;
+        StringProperty draw;
+
+        public TeamsInnerClass(String  icon, String teamName, String howManyPlayers, String numOfMatches, String score,
+                               String goalsScored, String goalsAgainst, String won, String loss, String draw) {
+            this.icon = new SimpleStringProperty(icon);
+            this.teamName = new SimpleStringProperty(teamName);
+            this.howManyPlayers = new SimpleStringProperty(howManyPlayers);
+            this.numOfMatches = new SimpleStringProperty(numOfMatches);
+            this.score = new SimpleStringProperty(score);
+            this.goalsScored = new SimpleStringProperty(goalsScored);
+            this.goalsAgainst = new SimpleStringProperty(goalsAgainst);
+            this.won = new SimpleStringProperty(won);
+            this.loss = new SimpleStringProperty(loss);
+            this.draw = new SimpleStringProperty(draw);
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        mediaView = new MediaView(mediaPlayer);
+//        JFXTreeTableColumn icon = new JFXTreeTableColumn<>("Icon");
+//        icon.setCellValueFactory(new PropertyValueFactory<>("image"));
+//        icon.setPrefWidth(50);
+        JFXTreeTableColumn<TeamsInnerClass, String> icon = new JFXTreeTableColumn<>("Icon");
+        icon.setPrefWidth(100);
+        icon.setCellValueFactory(param -> param.getValue().getValue().icon);
+        JFXTreeTableColumn<TeamsInnerClass, String> teamName = new JFXTreeTableColumn<>("Team Names");
+        teamName.setPrefWidth(100);
+        teamName.setCellValueFactory(param -> param.getValue().getValue().teamName);
+        JFXTreeTableColumn<TeamsInnerClass, String> howManyPlayers = new JFXTreeTableColumn<>("Players");
+        howManyPlayers.setPrefWidth(50);
+        howManyPlayers.setCellValueFactory(param -> param.getValue().getValue().howManyPlayers);
+        JFXTreeTableColumn<TeamsInnerClass, String> numOfMatches = new JFXTreeTableColumn<>("Matches");
+        numOfMatches.setPrefWidth(50);
+        numOfMatches.setCellValueFactory(param -> param.getValue().getValue().numOfMatches);
+        JFXTreeTableColumn<TeamsInnerClass, String> score = new JFXTreeTableColumn<>("Score");
+        score.setPrefWidth(50);
+        score.setCellValueFactory(param -> param.getValue().getValue().score);
+        JFXTreeTableColumn<TeamsInnerClass, String> goalsScored = new JFXTreeTableColumn<>("GScored");
+        goalsScored.setPrefWidth(50);
+        goalsScored.setCellValueFactory(param -> param.getValue().getValue().goalsScored);
+        JFXTreeTableColumn<TeamsInnerClass, String> goalsAgainst = new JFXTreeTableColumn<>("GAgainst");
+        goalsAgainst.setPrefWidth(50);
+        goalsAgainst.setCellValueFactory(param -> param.getValue().getValue().goalsAgainst);
+        JFXTreeTableColumn<TeamsInnerClass, String> won = new JFXTreeTableColumn<>("Won");
+        won.setPrefWidth(50);
+        won.setCellValueFactory(param -> param.getValue().getValue().won);
+        JFXTreeTableColumn<TeamsInnerClass, String> loss = new JFXTreeTableColumn<>("Loss");
+        loss.setPrefWidth(50);
+        loss.setCellValueFactory(param -> param.getValue().getValue().loss);
+        JFXTreeTableColumn<TeamsInnerClass, String> draw = new JFXTreeTableColumn<>("Draw");
+        draw.setPrefWidth(50);
+        draw.setCellValueFactory(param -> param.getValue().getValue().draw);
+
+        ObservableList<TeamsInnerClass> teamsInnerClass = FXCollections.observableArrayList();
+        teamsInnerClass.add(new TeamsInnerClass("League/backs/1.jpg", "no", "16", "1", "15", "4", "3", "5", "10","5"));
+        final TreeItem<TeamsInnerClass> root = new RecursiveTreeItem<>(teamsInnerClass, RecursiveTreeObject::getChildren);
+        scoresTable.getColumns().setAll(icon, teamName, howManyPlayers, numOfMatches, score, goalsScored, goalsAgainst, won, loss, draw);
+        scoresTable.setRoot(root);
+        scoresTable.setShowRoot(false);
+    }
+
     public void Close(MouseEvent event) {
+//        for waiting before closing the app
 //        Thread.sleep(600);
         if (event.getSource() == closeButton) {
             System.exit(0);
@@ -122,8 +201,7 @@ public class Controller implements Initializable {
             getJfxDialog("اشتباه در ورود اطلاعات", "لطفا مقدار صحیح وارد کنید");
             e.printStackTrace();
         }
-//        objectsOfTeamsList = new Object[numberOfTeams][3];
-        teamNames= new JFXTextField[numberOfTeams];
+        teamNames = new JFXTextField[numberOfTeams];
         teamPlayerNumbers = new JFXTextField[numberOfTeams];
         iconsAddress = new String[numberOfTeams];
         if (count < 6) {
@@ -218,10 +296,11 @@ public class Controller implements Initializable {
     }
 
     //    get Teams Data And Put It Int teams of leagues! You Know!
-    private void getTeamsData() {
-        for (int i = 0; i <numberOfTeams ; i++) {
-            leagues.get(count).setTeams(teamNames[i].getText(), Integer.parseInt(teamPlayerNumbers[i].getText()), iconsAddress[i]);
+    public void setTeamsData() {
+        for (int i = 0; i < numberOfTeams; i++) {
+            leagues.get(count).setTeams(iconsAddress[i], teamNames[i].getText(), Integer.parseInt(teamPlayerNumbers[i].getText()));
         }
+
     }
 
     @FXML
@@ -238,7 +317,7 @@ public class Controller implements Initializable {
         jfxDialog.show();
     }
 
-    //    Make a fade transition
+    //    Make a fade in transition
     private void fadeIn() {
         FadeTransition fade = new FadeTransition(Duration.millis(800), newLeaguePage);
         fade.setFromValue(0);
@@ -246,6 +325,7 @@ public class Controller implements Initializable {
         fade.play();
     }
 
+    //    Make a fade out transition
     private void fadeOut() {
         FadeTransition fade = new FadeTransition(Duration.millis(800), newLeaguePage);
         fade.setFromValue(1);
@@ -253,13 +333,6 @@ public class Controller implements Initializable {
         fade.play();
     }
 
-    private void setTeams() {
-        for (int i = 0; i < numberOfTeams; i++) {
-//                leagues.get(count).setTeams();
-        }
-    }
-
-    @FXML
     public void browseButton() {
         path = getFiles();
         seekSlider.setValue(0);
@@ -270,12 +343,6 @@ public class Controller implements Initializable {
         playTime.setText(new DecimalFormat("#0.00").format(mediaPlayer.getCurrentTime().toMinutes()) + "  /");
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        mediaView = new MediaView(mediaPlayer);
-    }
-
-    @FXML
     public void playPause() {
         if (playPause.getText().equals("pause") && path != null) {
             playPause.setText("play");
@@ -310,7 +377,6 @@ public class Controller implements Initializable {
         }
     }
 
-    @FXML
     public void openFolderButton() {
         System.out.println("folder");
         String folderPath = fileManagerClass.getFolderPath();
@@ -345,7 +411,6 @@ public class Controller implements Initializable {
         return path;
     }
 
-    @FXML
     public void previous() {
         System.out.println("previous");
     }

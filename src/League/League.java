@@ -56,9 +56,9 @@ public class League {
         return teams;
     }
 
-    public void setTeams(String teamName, int playerNum, String icon) {
+    public void setTeams(String icon ,String teamName, int playerNum) {
         for (int i = 0; i < howManyTeams; i++) {
-            Team team = new Team(teamName, playerNum, icon);
+            Team team = new Team(icon, teamName, playerNum);
             teams.add(team);
         }
     }
