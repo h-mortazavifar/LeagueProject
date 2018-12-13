@@ -1,21 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXDatePicker?>
-<?import com.jfoenix.controls.JFXScrollPane?>
-<?import com.jfoenix.controls.JFXSlider?>
-<?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
-<?import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView?>
+<?import com.jfoenix.controls.*?>
+<?import de.jensd.fx.glyphs.materialdesignicons.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.CubicCurve?>
-
 <StackPane fx:id="dialogue" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="League.Controller">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" stylesheets="@theme.css">
@@ -32,9 +23,21 @@
                       <JFXDatePicker fx:id="startDate" layoutX="174.0" layoutY="237.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" promptText="تاریخ شروع" />
                       <JFXTextField fx:id="nameOfLeague" layoutX="174.0" layoutY="127.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" promptText="نام" />
                       <JFXTextField fx:id="teamsNum" layoutX="174.0" layoutY="181.0" nodeOrientation="RIGHT_TO_LEFT" prefWidth="200.0" promptText="تیم های حاضر" />
-                      <JFXButton fx:id="goOn" alignment="CENTER" buttonType="RAISED" layoutX="228.0" layoutY="315.0" onAction="#setNewLeague" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ادامه" textAlignment="CENTER" />
+                      <JFXButton fx:id="goOnToSecondPage" alignment="CENTER" buttonType="RAISED" layoutX="228.0" layoutY="315.0" onAction="#setNewLeagueAndTeamsPage" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ادامه" textAlignment="CENTER" />
                   </children>
               </AnchorPane>
+            <AnchorPane fx:id="teamsDataImport" layoutX="126.0" layoutY="94.0" opacity="0.95" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
+               <children>
+                  <JFXScrollPane fx:id="initializingTeamsScroll" layoutX="56.0" prefHeight="351.0" prefWidth="436.0" style="-fx-background-color: #f1f1f1; -fx-alignment: center;" />
+                  <JFXButton fx:id="teamsInitialized" alignment="CENTER" buttonType="RAISED" layoutX="229.0" layoutY="367.0" onAction="#setNewTeamsAndPlayersPage" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ادامه" textAlignment="CENTER" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="playersDataImport" layoutX="126.0" layoutY="94.0" opacity="0.95" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
+               <children>
+                  <JFXScrollPane fx:id="initializingPlayersScroll" layoutX="27.0" prefHeight="351.0" prefWidth="493.0" style="-fx-background-color: #f1f1f1; -fx-alignment: center;" />
+                  <JFXButton fx:id="playersInitialized" alignment="CENTER" buttonType="RAISED" layoutX="229.0" layoutY="367.0" onAction="#setAllDAtaForALeague" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ایجاد" textAlignment="CENTER" />
+               </children>
+            </AnchorPane>
               <Label fx:id="hintForStart" layoutX="248.0" layoutY="183.0" style="-fx-font-size: 25; -fx-background-radius: 20;" text="برای شروع روی این دکمه کلیک کنید" textAlignment="CENTER" textFill="WHITE" />
               <CubicCurve fx:id="forStartLine" controlX1="-75.5" controlX2="83.5" controlY1="64.0" controlY2="83.5" endX="159.0" endY="-82.0" fill="#ffffff00" layoutX="509.0" layoutY="218.0" startX="-134.0" startY="-5.0" stroke="WHITE" />
               <HBox fx:id="horizonPlayBox" alignment="CENTER_LEFT" layoutX="14.0" layoutY="542.0" prefHeight="25.0" prefWidth="774.0" style="-fx-spacing: 10; -fx-background-radius: 20; -fx-padding: 10; -fx-background-color: rgba(98,124,122,0.8);">
@@ -98,37 +101,69 @@
                       </JFXButton>
                   </children>
               </HBox>
-            <AnchorPane fx:id="teamsDataImport" layoutX="126.0" layoutY="94.0" opacity="0.95" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
-               <children>
-                  <JFXScrollPane fx:id="initializingTeamsScroll" layoutX="56.0" layoutY="-1.0" prefHeight="351.0" prefWidth="436.0" style="-fx-background-color: #f1f1f1; -fx-alignment: center;" />
-                  <JFXButton fx:id="teamsInitialized" alignment="CENTER" buttonType="RAISED" layoutX="229.0" layoutY="367.0" onAction="#setTeamsData" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ایجاد" textAlignment="CENTER" />
-               </children>
-            </AnchorPane>
-            <HBox layoutX="14.0" layoutY="14.0" prefHeight="14.0" prefWidth="284.0" style="-fx-spacing: 10;">
+            <HBox layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="248.0" style="-fx-spacing: 10;">
                <children>
                     <JFXButton fx:id="closeButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#Close" style="-fx-background-color: white;" text="بستن" textAlignment="CENTER">
                         <graphic>
                             <MaterialDesignIconView glyphName="WINDOW_CLOSE" size="15" />
                         </graphic>
                     </JFXButton>
-                  <JFXButton fx:id="matchMaker" alignment="CENTER" buttonType="RAISED" disable="true" layoutX="83.0" layoutY="10.0" style="-fx-background-color: white;" text="مسابقه" textAlignment="CENTER">
+                  <JFXButton fx:id="matchMaker" alignment="CENTER" buttonType="RAISED" disable="true" layoutX="83.0" layoutY="10.0" onAction="#matchMaking" style="-fx-background-color: white;" text="مسابقه" textAlignment="CENTER">
                      <graphic>
                         <MaterialDesignIconView glyphName="GAMEPAD_VARIANT" size="15" />
                      </graphic>
                   </JFXButton>
-                    <JFXButton fx:id="reports" alignment="CENTER" buttonType="RAISED" disable="true" style="-fx-background-color: white;" text="گزارش ها" textAlignment="CENTER">
+                    <JFXButton fx:id="reports" alignment="CENTER" buttonType="RAISED" disable="true" onAction="#report" style="-fx-background-color: white;" text="گزارش ها" textAlignment="CENTER">
                         <graphic>
                             <MaterialDesignIconView glyphName="TRENDING_UP" size="15" />
                         </graphic>
                     </JFXButton>
                </children>
             </HBox>
-            <AnchorPane fx:id="newLeaguePage1" layoutX="126.0" layoutY="94.0" opacity="0.95" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;">
+            <AnchorPane fx:id="ScorePageOfALeague" layoutX="126.0" layoutY="94.0" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
                <children>
-                  <Label alignment="CENTER" layoutX="224.0" layoutY="10.0" style="-fx-font-size: 20;" text="جدول امتیازات" textAlignment="CENTER" />
-                  <JFXTreeTableView fx:id="scoresTable" layoutX="57.0" layoutY="44.0" prefHeight="351.0" prefWidth="436.0" />
+                  <Label alignment="CENTER" layoutX="223.0" layoutY="11.0" style="-fx-font-size: 20;" text="جدول امتیازات" textAlignment="CENTER" />
+                  <JFXTreeTableView fx:id="scoresTable" layoutX="4.0" layoutY="59.0" prefHeight="351.0" prefWidth="539.0" />
+                  <Label alignment="CENTER" layoutX="411.0" layoutY="13.0" style="-fx-font-size: 15;" text="نام لیگ:" textAlignment="CENTER" />
+                  <Label alignment="CENTER" layoutX="91.0" layoutY="13.0" style="-fx-font-size: 15;" text="تاریخ شروع:" textAlignment="CENTER" />
+                  <Label fx:id="leagueName" alignment="CENTER" contentDisplay="CENTER" layoutX="413.0" layoutY="35.0" style="-fx-font-size: 15;" text="نام لیگ" textAlignment="CENTER" />
+                  <Label fx:id="leagueStartDate" alignment="CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="35.0" style="-fx-font-size: 15;" text="تاریخ شروع" textAlignment="CENTER" />
                </children>
             </AnchorPane>
+            <AnchorPane fx:id="makingAMatchPane" layoutX="126.0" layoutY="94.0" opacity="0.95" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
+               <children>
+                  <JFXComboBox />
+                  <JFXButton fx:id="matchHappend" alignment="CENTER" buttonType="RAISED" layoutX="229.0" layoutY="367.0" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ایجاد" textAlignment="CENTER" />
+               </children>
+            </AnchorPane>
+            <VBox fx:id="reportAccordionPane" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="51.0" visible="false">
+               <children>
+                  <Accordion prefHeight="281.0" prefWidth="239.0">
+                    <panes>
+                      <TitledPane animated="false" text="5 بازیکن پر گل">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="تیم های بدون گل خورده">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </TitledPane>
+                      <TitledPane animated="false" text="3 مسابقه با بیشترین گل">
+                        <content>
+                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        </content>
+                      </TitledPane>
+                        <TitledPane animated="false" layoutX="10.0" layoutY="60.0" text="مسابقه های بدون گل">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                           </content>
+                        </TitledPane>
+                    </panes>
+                  </Accordion>
+               </children>
+            </VBox>
           </children>
       </AnchorPane>
    </children>

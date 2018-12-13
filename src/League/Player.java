@@ -1,21 +1,23 @@
 package League;
 
 public class Player {
+    private int goals;
     private String name;
     private String lastName;
     private Post post;
     private int playerNo;
 
-    public void setPost(Post post) {
-        this.post = post;
-    }
+//    public void setPost(Post post) {
+//        this.post = post;
+//    }
 
-    private enum Post {
+    public enum Post {
         front, defender, halfBack, goalKeeper;
     }
 
     public Player(String name, String lastName, String post) {
         setPlayerNo();
+//        setPost(post);
         this.name = name;
         this.lastName = lastName;
         this.post = getPost();
@@ -49,7 +51,15 @@ public class Player {
         return post;
     }
 
-    public void setPost(String post) {
-        this.post = Post.valueOf(post);
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
+    public int getGoals() {
+        return goals;
+    }
+
+    public void setGoals(int goals) {
+        this.goals += goals;
     }
 }

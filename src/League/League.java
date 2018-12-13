@@ -1,29 +1,18 @@
 package League;
 
-import javafx.scene.image.Image;
-
-import java.io.File;
-import java.net.MalformedURLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
 
 public class League {
     private String name;
     private int howManyTeams;
-    private static ArrayList<Team> teams;
+    private Team[] teams;
     private Date startDate;
-//    private Scanner in = new Scanner(System.in);
-//    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     public League(String name, int howManyTeams, Date startDate) {
-//        setTeams();
-        setStartDate(startDate);
-        teams = getTeams();
-        setName(name);
-        setHowManyTeams(howManyTeams);
+        this.name = name;
+        this.howManyTeams = howManyTeams;
+        this.startDate = startDate;
+        teams = new Team[howManyTeams];
     }
 
     public String getName() {
@@ -52,19 +41,16 @@ public class League {
         this.startDate = date;
     }
 
-    public ArrayList<Team> getTeams() {
+    public Team[] getTeams() {
         return teams;
     }
 
-    public void setTeams(String icon ,String teamName, int playerNum) {
-        for (int i = 0; i < howManyTeams; i++) {
-            Team team = new Team(icon, teamName, playerNum);
-            teams.add(team);
-        }
+    public void setTeams( String icon, String teamName, int playerNum ,int number) {
+        teams[number] = new Team(icon, teamName, playerNum);
     }
 
     public Team getTeam(int i) {
-        return teams.get(i);
+        return teams[i];
     }
 
     public void setHowManyTeams(int howManyTeams) {

@@ -1,13 +1,10 @@
 package League;
 
-import javafx.scene.image.Image;
-
-import java.util.Arrays;
-import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Team {
     private String name;
-    private Player[] players;
+    private ArrayList<Player> players;
     private int howManyPlayers = 14;
     private String icon;
     private int numOfMatches;
@@ -17,15 +14,12 @@ public class Team {
     private int won;
     private int loss;
     private int draw;
-    Scanner in = new Scanner(System.in);
 
-    private Team(String icon, String name, int howManyPlayers, int numOfMatches, double score,
+    private Team(String icon, String teamName, int howManyPlayers, int numOfMatches, double score,
                  int goalsScored, int goalsAgainst, int won, int loss, int draw) {
         setHowManyPlayers(howManyPlayers);
-        setPlayers();
-        this.name = name;
-        this.howManyPlayers = getHowManyPlayers();
         this.icon = icon;
+        this.name = teamName;
         this.numOfMatches = numOfMatches;
         this.score = score;
         this.goalsScored = goalsScored;
@@ -35,21 +29,23 @@ public class Team {
         this.draw = draw;
     }
 
-    public Team(String icon ,String teamName, int howManyPlayers) {
+    public Team(String icon, String teamName, int howManyPlayers) {
         this(icon, teamName, howManyPlayers, 0, 0, 0, 0, 0, 0, 0);
     }
 
-    public Player[] getPlayers() {
+    public ArrayList<Player> getPlayers() {
         return players;
     }
 
-    public void setPlayers() {
-        for (int i = 0; i < howManyPlayers; i++) {
-            String name = in.next();
-            String lastName = in.next();
-            String post = in.next();
-            players[i] = new Player(name, lastName, post);
-        }
+    public Player getPlayerOfNumber(int number) {
+        return players.get(number);
+    }
+    public Player setPlayerOfNumber(int number) {
+        return players.get(number);
+    }
+
+    public void setPlayers(String name, String lastName, String post) {
+        players.add(new Player(name, lastName, post));
     }
 
     public String getName() {
@@ -90,7 +86,7 @@ public class Team {
     }
 
     public void setScore(double score) {
-        this.score = score;
+        this.score += score;
     }
 
     public int getGoalsScored() {
@@ -106,7 +102,7 @@ public class Team {
     }
 
     public void setGoalsAgainst(int goalsAgainst) {
-        this.goalsAgainst = goalsAgainst;
+        this.goalsAgainst += goalsAgainst;
     }
 
     public int getWon() {
@@ -133,10 +129,6 @@ public class Team {
         this.draw += 1;
     }
 
-    @Override
-    public String toString() {
-        return Arrays.toString(players);
-    }
 }
 
 

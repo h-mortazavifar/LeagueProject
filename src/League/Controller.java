@@ -5,10 +5,8 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
 import javafx.animation.FadeTransition;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +15,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -32,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
@@ -50,7 +48,7 @@ public class Controller implements Initializable {
     public JFXButton closeButton;
     public Tooltip tooltip;
     public JFXTextField nameOfLeague;
-    public JFXButton goOn;
+    public JFXButton goOnToSecondPage;
     public AnchorPane newLeaguePage;
     public Label hintForStart;
     public CubicCurve forStartLine;
@@ -79,7 +77,17 @@ public class Controller implements Initializable {
     public JFXButton teamsInitialized;
     public AnchorPane teamsDataImport;
     public StackPane dialogue;
-    public JFXTreeTableView<TeamsInnerClass> scoresTable;
+    public JFXTreeTableView scoresTable;
+    public AnchorPane ScorePageOfALeague;
+    public JFXButton matchMaker;
+    public Label leagueName;
+    public Label leagueStartDate;
+    public AnchorPane playersDataImport;
+    public JFXScrollPane initializingPlayersScroll;
+    public JFXButton playersInitialized;
+    public VBox reportAccordionPane;
+    public AnchorPane makingAMatchPane;
+    public JFXButton matchHappend;
     private int count = 0;
     private int numberOfTeams;
     private FileManager fileManagerClass = new FileManager();
@@ -89,29 +97,42 @@ public class Controller implements Initializable {
     private Double totalTimeOfMusic;
     private final List<MediaPlayer> players = new ArrayList<>();
     private JFXDialog jfxDialog;
-    private static ArrayList<League> leagues = new ArrayList<League>();
+    static ArrayList<League> leagues = new ArrayList<League>();
     private Label teamScrollBarTop = new Label("ایجاد تیم ها");
+    private Label playersScrollBarTop = new Label("ایجاد بازیکن ها");
     private JFXTextField[] teamNames;
+    private JFXTextField[][] playerNames;
     private JFXTextField[] teamPlayerNumbers;
+    private JFXTextField[][] playerLastNames;
+    private JFXComboBox[][] post;
     private String[] iconsAddress;
     private String addressOfIcon;
+    private int whichIsLastClicked = 0;
+    private String name = null;
+    private Date inputDate = null;
+    private int newCount;
+    Player.Post[][] postToImport;
+    String[][] playerNamesToImport;
+    String[][] PlayerLastNamesToImport;
     //    private int slideshowCount;
 
     class TeamsInnerClass extends RecursiveTreeObject<TeamsInnerClass> {
-        StringProperty icon;
-        StringProperty teamName;
-        StringProperty howManyPlayers;
-        StringProperty numOfMatches;
-        StringProperty score;
-        StringProperty goalsScored;
-        StringProperty goalsAgainst;
-        StringProperty won;
-        StringProperty loss;
-        StringProperty draw;
+        SimpleObjectProperty icon;
+        SimpleStringProperty teamName;
+        SimpleStringProperty howManyPlayers;
+        SimpleStringProperty numOfMatches;
+        SimpleStringProperty score;
+        SimpleStringProperty goalsScored;
+        SimpleStringProperty goalsAgainst;
+        SimpleStringProperty won;
+        SimpleStringProperty loss;
+        SimpleStringProperty draw;
 
-        public TeamsInnerClass(String  icon, String teamName, String howManyPlayers, String numOfMatches, String score,
+        public TeamsInnerClass(@NotNull ImageView icon, String teamName, String howManyPlayers, String numOfMatches, String score,
                                String goalsScored, String goalsAgainst, String won, String loss, String draw) {
-            this.icon = new SimpleStringProperty(icon);
+            icon.setFitHeight(30);
+            icon.setFitWidth(30);
+            this.icon = new SimpleObjectProperty(icon);
             this.teamName = new SimpleStringProperty(teamName);
             this.howManyPlayers = new SimpleStringProperty(howManyPlayers);
             this.numOfMatches = new SimpleStringProperty(numOfMatches);
@@ -127,46 +148,30 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         mediaView = new MediaView(mediaPlayer);
-        JFXTreeTableColumn icon = new JFXTreeTableColumn<>("Icon");
-        icon.setCellValueFactory(new PropertyValueFactory<>("image"));
-        icon.setPrefWidth(50);
-//        JFXTreeTableColumn<TeamsInnerClass, String> icon = new JFXTreeTableColumn<>("Icon");
-//        icon.setPrefWidth(100);
-//        icon.setCellValueFactory(param -> param.getValue().getValue().icon);
-        JFXTreeTableColumn<TeamsInnerClass, String> teamName = new JFXTreeTableColumn<>("Team Names");
-        teamName.setPrefWidth(100);
-        teamName.setCellValueFactory(param -> param.getValue().getValue().teamName);
-        JFXTreeTableColumn<TeamsInnerClass, String> howManyPlayers = new JFXTreeTableColumn<>("Players");
-        howManyPlayers.setPrefWidth(50);
-        howManyPlayers.setCellValueFactory(param -> param.getValue().getValue().howManyPlayers);
-        JFXTreeTableColumn<TeamsInnerClass, String> numOfMatches = new JFXTreeTableColumn<>("Matches");
-        numOfMatches.setPrefWidth(50);
-        numOfMatches.setCellValueFactory(param -> param.getValue().getValue().numOfMatches);
-        JFXTreeTableColumn<TeamsInnerClass, String> score = new JFXTreeTableColumn<>("Score");
-        score.setPrefWidth(50);
-        score.setCellValueFactory(param -> param.getValue().getValue().score);
-        JFXTreeTableColumn<TeamsInnerClass, String> goalsScored = new JFXTreeTableColumn<>("GScored");
-        goalsScored.setPrefWidth(50);
-        goalsScored.setCellValueFactory(param -> param.getValue().getValue().goalsScored);
-        JFXTreeTableColumn<TeamsInnerClass, String> goalsAgainst = new JFXTreeTableColumn<>("GAgainst");
-        goalsAgainst.setPrefWidth(50);
-        goalsAgainst.setCellValueFactory(param -> param.getValue().getValue().goalsAgainst);
-        JFXTreeTableColumn<TeamsInnerClass, String> won = new JFXTreeTableColumn<>("Won");
-        won.setPrefWidth(50);
-        won.setCellValueFactory(param -> param.getValue().getValue().won);
-        JFXTreeTableColumn<TeamsInnerClass, String> loss = new JFXTreeTableColumn<>("Loss");
-        loss.setPrefWidth(50);
-        loss.setCellValueFactory(param -> param.getValue().getValue().loss);
-        JFXTreeTableColumn<TeamsInnerClass, String> draw = new JFXTreeTableColumn<>("Draw");
-        draw.setPrefWidth(50);
-        draw.setCellValueFactory(param -> param.getValue().getValue().draw);
-
-        ObservableList<TeamsInnerClass> teamsInnerClass = FXCollections.observableArrayList();
-        teamsInnerClass.add(new TeamsInnerClass("League/backs/1.jpg", "no", "16", "1", "15", "4", "3", "5", "10","5"));
-        final TreeItem<TeamsInnerClass> root = new RecursiveTreeItem<>(teamsInnerClass, RecursiveTreeObject::getChildren);
-        scoresTable.getColumns().setAll(icon, teamName, howManyPlayers, numOfMatches, score, goalsScored, goalsAgainst, won, loss, draw);
-        scoresTable.setRoot(root);
-        scoresTable.setShowRoot(false);
+        current1.setOnAction(event -> {
+            whichIsLastClicked = 0;
+            showTable();
+        });
+        current2.setOnAction(event -> {
+            whichIsLastClicked = 1;
+            showTable();
+        });
+        current3.setOnAction(event -> {
+            whichIsLastClicked = 2;
+            showTable();
+        });
+        current4.setOnAction(event -> {
+            whichIsLastClicked = 3;
+            showTable();
+        });
+        current5.setOnAction(event -> {
+            whichIsLastClicked = 4;
+            showTable();
+        });
+        current6.setOnAction(event -> {
+            whichIsLastClicked = 5;
+            showTable();
+        });
     }
 
     public void Close(MouseEvent event) {
@@ -177,10 +182,91 @@ public class Controller implements Initializable {
         }
     }
 
+    public void showTable() {
+        fadeOut();
+        matchMaker.setDisable(false);
+        fadeIn();
+        ScorePageOfALeague.setVisible(true);
+//        clear the old data of the table:
+        scoresTable.getColumns().clear();
+        tableMaker();
+    }
+
+    private void tableMaker() {
+//        String photoURL, String teamName, int howManyPlayers, int numOfMatches, int goalsScored,
+//                            int goalsAgainst, int won, int loss, int draw, int score
+        ObservableList<TeamsInnerClass> teamsInnerClass = FXCollections.observableArrayList();
+        JFXTreeTableColumn<TeamsInnerClass, ImageView> icon = new JFXTreeTableColumn<>();
+        icon.setPrefWidth(100);
+        icon.setCellValueFactory(param -> param.getValue().getValue().icon);
+        JFXTreeTableColumn<TeamsInnerClass, String> teamName = new JFXTreeTableColumn<>("Teams");
+        teamName.setPrefWidth(100);
+        teamName.setCellValueFactory(param -> param.getValue().getValue().teamName);
+        JFXTreeTableColumn<TeamsInnerClass, String> howManyPlayers = new JFXTreeTableColumn<>("Players");
+        howManyPlayers.setPrefWidth(50);
+        howManyPlayers.setCellValueFactory(param -> param.getValue().getValue().howManyPlayers);
+        JFXTreeTableColumn<TeamsInnerClass, String> numOfMatches = new JFXTreeTableColumn<>("Matches");
+        numOfMatches.setPrefWidth(80);
+        numOfMatches.setCellValueFactory(param -> param.getValue().getValue().numOfMatches);
+        JFXTreeTableColumn<TeamsInnerClass, String> goalsScored = new JFXTreeTableColumn<>("GScored");
+        goalsScored.setPrefWidth(80);
+        goalsScored.setCellValueFactory(param -> param.getValue().getValue().goalsScored);
+        JFXTreeTableColumn<TeamsInnerClass, String> goalsAgainst = new JFXTreeTableColumn<>("GAgainst");
+        goalsAgainst.setPrefWidth(80);
+        goalsAgainst.setCellValueFactory(param -> param.getValue().getValue().goalsAgainst);
+        JFXTreeTableColumn<TeamsInnerClass, String> won = new JFXTreeTableColumn<>("W");
+        won.setPrefWidth(20);
+        won.setCellValueFactory(param -> param.getValue().getValue().won);
+        JFXTreeTableColumn<TeamsInnerClass, String> loss = new JFXTreeTableColumn<>("L");
+        loss.setPrefWidth(20);
+        loss.setCellValueFactory(param -> param.getValue().getValue().loss);
+        JFXTreeTableColumn<TeamsInnerClass, String> draw = new JFXTreeTableColumn<>("D");
+        draw.setPrefWidth(20);
+        draw.setCellValueFactory(param -> param.getValue().getValue().draw);
+        JFXTreeTableColumn<TeamsInnerClass, String> score = new JFXTreeTableColumn<>("S");
+        score.setPrefWidth(20);
+        score.setCellValueFactory(param -> param.getValue().getValue().score);
+//        teamsInnerClass.add(new TeamsInnerClass(new ImageView(new Image("League/backs/nurnberg.png")), "no",
+//                "16", "1", "15", "4", "3", "5", "10", "5"));
+        ImageView forIcon;
+        String forTeamNames;
+        String forNumberOfPlayers;
+        String forNumberOfMatches;
+        String forScores;
+
+        for (int i = 0; i < numberOfTeams; i++) {
+            forIcon = new ImageView(new Image(iconsAddress[i]));
+            forTeamNames = String.valueOf(teamNames[i].getText());
+            forNumberOfPlayers = String.valueOf(teamPlayerNumbers[i].getText());
+            forNumberOfMatches = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getNumOfMatches());
+            forScores = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getScore());
+
+            teamsInnerClass.add(new TeamsInnerClass(forIcon, forTeamNames, forNumberOfPlayers
+                    , forNumberOfMatches, forScores, String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getGoalsScored()),
+                    String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getGoalsAgainst()), String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getWon()),
+                    String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getLoss()), String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getDraw())));
+        }
+        final TreeItem<TeamsInnerClass> root = new RecursiveTreeItem<>(teamsInnerClass, RecursiveTreeObject::getChildren);
+        scoresTable.getColumns().addAll(icon, teamName, howManyPlayers, numOfMatches, goalsScored, goalsAgainst, won, loss, draw, score);
+        scoresTable.setRoot(root);
+        scoresTable.setShowRoot(false);
+
+    }
+
+    //    get Teams Data And Put It teams of leagues! You Know!
+    public void setAllDAtaForALeague() {
+        playersDataImport.setVisible(false);
+
+    }
+
     public void setNewLeagueVisible(ActionEvent event) {
         event.getSource();
+        playersDataImport.setVisible(false);
         hintForStart.setVisible(false);
+        fadeOut();
         topWelcomeHint.setVisible(false);
+        fadeOut();
+        ScorePageOfALeague.setVisible(false);
         fadeOut();
         forStartLine.setVisible(false);
         fadeOut();
@@ -190,9 +276,10 @@ public class Controller implements Initializable {
         newLeaguePage.setVisible(true);
     }
 
-    public void setNewLeague() throws NullPointerException {
-        String name = null;
-        Date inputDate = null;
+    //    set name, start Date and number of teams in a league
+    public void setNewLeagueAndTeamsPage() throws NullPointerException {
+        playersDataImport.setVisible(false);
+        VBox content = makingAVBox(teamScrollBarTop, initializingTeamsScroll);
         try {
             name = nameOfLeague.getText();
             inputDate = Date.from(startDate.getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());
@@ -209,24 +296,16 @@ public class Controller implements Initializable {
         }
         newLeaguePage.setVisible(false);
         fadeOut();
-        VBox content = new VBox();
-        content.setPrefWidth(200);
-        content.setSpacing(10);
-        teamScrollBarTop.setTextFill(Color.WHITE);
-        teamScrollBarTop.setStyle("-fx-text-fill:WHITE; -fx-font-size: 30;");
-        initializingTeamsScroll.setContent(content);
-        initializingTeamsScroll.getBottomBar().getChildren().add(teamScrollBarTop);
+        leagueName.setText(name);
+        leagueStartDate.setText(String.valueOf(inputDate));
+
         JFXScrollPane.smoothScrolling((ScrollPane) initializingTeamsScroll.getChildren().get(0));
         for (int i = 0; i < numberOfTeams; i++) {
-            HBox hBox = new HBox();
-            hBox.setSpacing(20);
-            hBox.setPadding(new Insets(10));
-            hBox.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-            content.getChildren().add(hBox);
+            HBox hBox = makingAHBox(content);
             MaterialDesignIconView iconView = new MaterialDesignIconView(MaterialDesignIcon.FILE);
             JFXButton getIconButton = new JFXButton("آیکن");
             getIconButton.setGraphic(iconView);
-            getIconButton.setId("team" + i);
+//            getIconButton.setId("team" + i);
             getIconButton.setStyle("-fx-background-color:WHITE;");
             getIconButton.setPrefWidth(100);
             int finalI = i;
@@ -246,13 +325,13 @@ public class Controller implements Initializable {
             JFXTextField teamName = new JFXTextField();
             teamName.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
             teamName.setPromptText("نام تیم " + (i + 1));
-            teamName.setId(teamName + String.valueOf(i));
+//            teamName.setId(teamName + String.valueOf(i));
             teamNames[i] = teamName;
             hBox.getChildren().add(teamName);
             JFXTextField howManyPlayers = new JFXTextField();
             howManyPlayers.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
             howManyPlayers.setPromptText("تعداد بازیکن های تیم " + (i + 1));
-            howManyPlayers.setId(howManyPlayers + String.valueOf(i));
+//            howManyPlayers.setId(howManyPlayers + String.valueOf(i));
             teamPlayerNumbers[i] = howManyPlayers;
             hBox.getChildren().add(howManyPlayers);
         }
@@ -295,14 +374,143 @@ public class Controller implements Initializable {
         count++;
     }
 
-    //    get Teams Data And Put It Int teams of leagues! You Know!
-    public void setTeamsData() {
-        for (int i = 0; i < numberOfTeams; i++) {
-            leagues.get(count).setTeams(iconsAddress[i], teamNames[i].getText(), Integer.parseInt(teamPlayerNumbers[i].getText()));
+    public void matchMaking() {
+        if (makingAMatchPane.isVisible()) {
+            makingAMatchPane.setVisible(false);
+        } else {
+            makingAMatchPane.setVisible(true);
         }
-
+        reports.setDisable(false);
     }
 
+    public void report() {
+        if (reportAccordionPane.isVisible()) {
+            reportAccordionPane.setVisible(false);
+        } else {
+            reportAccordionPane.setVisible(true);
+        }
+    }
+
+    public void setNewTeamsAndPlayersPage() throws NullPointerException {
+        newCount = count - 1;
+        VBox content = makingAVBox(playersScrollBarTop, initializingPlayersScroll);
+        for (int i = 0; i < numberOfTeams; i++) {
+            leagues.get(newCount).setTeams(iconsAddress[i], teamNames[i].getText(),
+                    Integer.parseInt(teamPlayerNumbers[i].getText()), i);
+        }
+        playerNames = new JFXTextField[numberOfTeams][];
+        playerLastNames = new JFXTextField[numberOfTeams][];
+        post = new JFXComboBox[numberOfTeams][];
+        teamsDataImport.setVisible(false);
+        fadeOut();
+
+        JFXScrollPane.smoothScrolling((ScrollPane) initializingPlayersScroll.getChildren().get(0));
+        for (int i = 0; i < numberOfTeams; i++) {
+            playerNames[i] = new JFXTextField[Integer.parseInt(teamPlayerNumbers[i].getText())];
+            playerLastNames[i] = new JFXTextField[Integer.parseInt(teamPlayerNumbers[i].getText())];
+            post[i] = new JFXComboBox[Integer.parseInt(teamPlayerNumbers[i].getText())];
+            for (int j = 0; j < Integer.parseInt(teamPlayerNumbers[i].getText()); j++) {
+                HBox hBox = makingAHBox(content);
+                JFXComboBox getPlayersPost = new JFXComboBox();
+                getPlayersPost.setStyle("-fx-background-color:WHITE;");
+                getPlayersPost.setPrefWidth(150);
+                getPlayersPost.setPromptText("پست بازیکن در زمین");
+                getPlayersPost.getItems().addAll(Player.Post.values());
+                int finalI1 = i;
+                int finalI = j;
+                getPlayersPost.setOnAction(event -> {
+                    getPlayersPost.setPromptText("تعیین شد");
+                    getPlayersPost.setDisable(true);
+                    System.out.println(getPlayersPost.getValue());
+//                    leagues.get(count - 1).getTeam(finalI1).getPlayerOfNumber(finalI).setPost((Player.Post) getPlayersPost.getValue());
+                    post[finalI1][finalI] = getPlayersPost;
+                    postToImport[finalI1][finalI] = (Player.Post) post[finalI1][finalI].getValue();
+                });
+                hBox.getChildren().add(getPlayersPost);
+                JFXTextField name = new JFXTextField();
+                name.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+                name.setPromptText("نام بازیکن شماره " + (j + 1) + " از تیم " + (i + 1));
+                playerNames[i][j] = name;
+                hBox.getChildren().add(name);
+                JFXTextField lastName = new JFXTextField();
+                lastName.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+                lastName.setPromptText("فامیلی بازیکن شماره " + (j + 1) + " از تیم " + (i + 1));
+                playerLastNames[i][j] = lastName;
+                hBox.getChildren().add(lastName);
+            }
+        }
+        postToImport = new Player.Post[numberOfTeams][];
+        playerNamesToImport = new String[numberOfTeams][];
+        PlayerLastNamesToImport = new String[numberOfTeams][];
+        for (int i = 0; i < numberOfTeams; i++) {
+            postToImport[i] = new Player.Post[Integer.parseInt(teamPlayerNumbers[i].getText())];
+            playerNamesToImport[i] = new String[Integer.parseInt(teamPlayerNumbers[i].getText())];
+            PlayerLastNamesToImport[i] = new String[Integer.parseInt(teamPlayerNumbers[i].getText())];
+            for (int j = 0; j < Integer.parseInt(teamPlayerNumbers[i].getText()); j++) {
+                playerNamesToImport[i][j] = playerNames[i][j].getText();
+                PlayerLastNamesToImport[i][j] = playerLastNames[i][j].getText();
+            }
+        }
+        fadeIn();
+        playersDataImport.setVisible(true);
+        /*switch (count) {
+            case 0:
+                fadeIn();
+                current1.setVisible(true);
+                current1.setText(name);
+                break;
+            case 1:
+                fadeIn();
+                current2.setVisible(true);
+                current2.setText(name);
+                break;
+            case 2:
+                fadeIn();
+                current3.setVisible(true);
+                current3.setText(name);
+                break;
+            case 3:
+                fadeIn();
+                current4.setVisible(true);
+                current4.setText(name);
+                break;
+            case 4:
+                fadeIn();
+                current5.setVisible(true);
+                current5.setText(name);
+                break;
+            case 5:
+                fadeIn();
+                current6.setVisible(true);
+                current6.setText(name);
+                break;
+            default:
+                getJfxDialog("بیش از حد مجاز", "شما امکان ایجاد تنها 6 لیگ را دارید.");
+        }
+        count++;*/
+    }
+
+    private HBox makingAHBox(@NotNull VBox vBox) {
+        HBox hBox = new HBox();
+        hBox.setSpacing(20);
+        hBox.setPadding(new Insets(10));
+        hBox.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
+        vBox.getChildren().add(hBox);
+        return hBox;
+    }
+
+    private VBox makingAVBox(@NotNull Label ScrollBarTop, @NotNull JFXScrollPane initializingScroll) {
+        VBox content = new VBox();
+        content.setPrefWidth(200);
+        content.setSpacing(10);
+        ScrollBarTop.setTextFill(Color.WHITE);
+        ScrollBarTop.setStyle("-fx-text-fill:WHITE; -fx-font-size: 30;");
+        initializingScroll.setContent(content);
+        initializingScroll.getBottomBar().getChildren().add(ScrollBarTop);
+        return content;
+    }
+
+    //  making a dialogue box
     @FXML
     private void getJfxDialog(String heading, String body) {
         JFXDialogLayout dialogContent = new JFXDialogLayout();
@@ -333,6 +541,7 @@ public class Controller implements Initializable {
         fade.play();
     }
 
+    //    browseButton for selecting a file for music
     public void browseButton() {
         path = getFiles();
         seekSlider.setValue(0);
