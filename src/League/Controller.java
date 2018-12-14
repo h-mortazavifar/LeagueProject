@@ -233,6 +233,11 @@ public class Controller implements Initializable {
         String forNumberOfPlayers;
         String forNumberOfMatches;
         String forScores;
+        String forGoalsScored;
+        String forGoalsAgainst;
+        String forGetWon;
+        String forGetLoss;
+        String forGetDrawn;
 
         for (int i = 0; i < numberOfTeams; i++) {
             forIcon = new ImageView(new Image(iconsAddress[i]));
@@ -240,11 +245,14 @@ public class Controller implements Initializable {
             forNumberOfPlayers = String.valueOf(teamPlayerNumbers[i].getText());
             forNumberOfMatches = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getNumOfMatches());
             forScores = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getScore());
+            forGoalsScored = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getGoalsScored());
+            forGoalsAgainst = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getGoalsAgainst());
+            forGetWon = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getWon());
+            forGetLoss = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getLoss());
+            forGetDrawn = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getDraw());
 
-            teamsInnerClass.add(new TeamsInnerClass(forIcon, forTeamNames, forNumberOfPlayers
-                    , forNumberOfMatches, forScores, String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getGoalsScored()),
-                    String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getGoalsAgainst()), String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getWon()),
-                    String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getLoss()), String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getDraw())));
+            teamsInnerClass.add(new TeamsInnerClass(forIcon, forTeamNames, forNumberOfPlayers, forNumberOfMatches,
+                    forScores, forGoalsScored, forGoalsAgainst, forGetWon, forGetLoss, forGetDrawn));
         }
         final TreeItem<TeamsInnerClass> root = new RecursiveTreeItem<>(teamsInnerClass, RecursiveTreeObject::getChildren);
         scoresTable.getColumns().addAll(icon, teamName, howManyPlayers, numOfMatches, goalsScored, goalsAgainst, won, loss, draw, score);

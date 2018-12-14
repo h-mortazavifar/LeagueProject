@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
@@ -41,7 +42,7 @@ public class Main extends Application {
         scene.getStylesheets().add(Main.class.getResource("theme.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Purple League");
-//        primaryStage.getIcons();
+        primaryStage.getIcons().add(new Image("League/backs/Asset 13x.png"));
         primaryStage.show();
         //        final StackPane layout = new StackPane();
         /*ArrayList<String> images = new ArrayList<>();

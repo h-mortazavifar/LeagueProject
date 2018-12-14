@@ -50,9 +50,22 @@
                               <Cursor fx:constant="HAND" />
                           </cursor>
                       </JFXButton>
+                      <JFXButton fx:id="next" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#next" onMouseClicked="#Close" style="-fx-background-color: white;" text="next" textAlignment="CENTER">
+                          <graphic>
+                              <MaterialDesignIconView glyphName="SKIP_NEXT" size="15" />
+                          </graphic>
+                      </JFXButton>
                       <JFXButton fx:id="fileBrowser" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="88.0" layoutY="10.0" onAction="#browseButton" onMouseClicked="#Close" style="-fx-background-color: white;" textAlignment="CENTER">
                           <graphic>
                               <MaterialDesignIconView glyphName="FILE_MUSIC" size="15" />
+                          </graphic>
+                          <cursor>
+                              <Cursor fx:constant="HAND" />
+                          </cursor>
+                      </JFXButton>
+                      <JFXButton fx:id="folderBrowser" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#openFolderButton" onMouseClicked="#Close" style="-fx-background-color: white;" text="folder" textAlignment="CENTER">
+                          <graphic>
+                              <MaterialDesignIconView glyphName="FOLDER" size="15" />
                           </graphic>
                           <cursor>
                               <Cursor fx:constant="HAND" />
@@ -79,28 +92,6 @@
                   </children>
               </VBox>
               <Label fx:id="songName" disable="true" layoutX="14.0" layoutY="521.0" maxWidth="163.0" prefHeight="17.0" prefWidth="163.0" style="-fx-max-width: 300;" text="Name of the song" textFill="WHITE" visible="false" />
-              <HBox disable="true" layoutX="290.0" layoutY="421.0" prefHeight="100.0" prefWidth="200.0" style="-fx-spacing: 10;" visible="false">
-                  <children>
-                      <JFXButton fx:id="next" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#next" onMouseClicked="#Close" style="-fx-background-color: white;" text="next" textAlignment="CENTER">
-                          <graphic>
-                              <MaterialDesignIconView glyphName="SKIP_NEXT" size="15" />
-                          </graphic>
-                      </JFXButton>
-                      <JFXButton fx:id="folderBrowser" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#openFolderButton" onMouseClicked="#Close" style="-fx-background-color: white;" text="folder" textAlignment="CENTER">
-                          <graphic>
-                              <MaterialDesignIconView glyphName="FOLDER" size="15" />
-                          </graphic>
-                          <cursor>
-                              <Cursor fx:constant="HAND" />
-                          </cursor>
-                      </JFXButton>
-                      <JFXButton fx:id="previous" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#previous" onMouseClicked="#Close" style="-fx-background-color: white;" text="previous" textAlignment="CENTER">
-                          <graphic>
-                              <MaterialDesignIconView glyphName="SKIP_PREVIOUS" size="15" />
-                          </graphic>
-                      </JFXButton>
-                  </children>
-              </HBox>
             <HBox layoutX="14.0" layoutY="14.0" prefHeight="27.0" prefWidth="248.0" style="-fx-spacing: 10;">
                <children>
                     <JFXButton fx:id="closeButton" alignment="CENTER" buttonType="RAISED" onMouseClicked="#Close" style="-fx-background-color: white;" text="بستن" textAlignment="CENTER">
@@ -164,6 +155,11 @@
                   </Accordion>
                </children>
             </VBox>
+                <JFXButton fx:id="previous" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" layoutX="24.0" layoutY="508.0" onAction="#previous" onMouseClicked="#Close" style="-fx-background-color: white;" text="previous" textAlignment="CENTER" visible="false">
+                    <graphic>
+                        <MaterialDesignIconView glyphName="SKIP_PREVIOUS" size="15" />
+                    </graphic>
+                </JFXButton>
           </children>
       </AnchorPane>
    </children>
