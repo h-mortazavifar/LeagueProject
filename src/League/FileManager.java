@@ -20,8 +20,10 @@ public class FileManager {
             file = fc.showOpenDialog(null);
             if (file != null) {
                 String path = file.getAbsolutePath();
+//                for populating data for table the path should be relative:
+                String base = "C:/Users/hmort/IdeaProjects/LeagueProject";
                 path = path.replace("\\", "/");
-                return path;
+                return new File(base).toURI().relativize(new File(path).toURI()).getPath();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -36,7 +38,7 @@ public class FileManager {
             DirectoryChooser directoryChooser = new DirectoryChooser();
             file = directoryChooser.showDialog(null);
             if (file != null) {
-                path = file.getParent();
+                path = file.getAbsolutePath();
                 path = path.replace("\\", "/");
                 return path;
             }

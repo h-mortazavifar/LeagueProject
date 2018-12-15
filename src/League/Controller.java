@@ -194,8 +194,6 @@ public class Controller implements Initializable {
     }
 
     private void tableMaker() {
-//        String photoURL, String teamName, int howManyPlayers, int numOfMatches, int goalsScored,
-//                            int goalsAgainst, int won, int loss, int draw, int score
         ObservableList<TeamsInnerClass> teamsInnerClass = FXCollections.observableArrayList();
         JFXTreeTableColumn<TeamsInnerClass, ImageView> icon = new JFXTreeTableColumn<>();
         icon.setPrefWidth(100);
@@ -227,8 +225,6 @@ public class Controller implements Initializable {
         JFXTreeTableColumn<TeamsInnerClass, String> score = new JFXTreeTableColumn<>("S");
         score.setPrefWidth(20);
         score.setCellValueFactory(param -> param.getValue().getValue().score);
-//        teamsInnerClass.add(new TeamsInnerClass(new ImageView(new Image("League/backs/nurnberg.png")), "no",
-//                "16", "1", "15", "4", "3", "5", "10", "5"));
         ImageView forIcon;
         String forTeamNames;
         String forNumberOfPlayers;
@@ -242,7 +238,7 @@ public class Controller implements Initializable {
 
         for (int i = 0; i < numberOfTeams; i++) {
             forIcon = new ImageView(new Image(iconsAddress[i]));
-            forTeamNames = String.valueOf(teamNames[i].getText());
+            forTeamNames = teamNames[i].getText();
             forNumberOfPlayers = String.valueOf(teamPlayerNumbers[i].getText());
             forNumberOfMatches = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getNumOfMatches());
             forScores = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getScore());
