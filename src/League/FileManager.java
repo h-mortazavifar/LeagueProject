@@ -8,9 +8,6 @@ import javafx.util.Duration;
 import java.io.File;
 
 public class FileManager {
-    //    for a Bigger and Better music player:
-//    private File imageFilePausePlay;
-//    private String localUrl;
     private ChangeListener<Duration> progressChangeListener;
     private File file;
 
@@ -20,7 +17,7 @@ public class FileManager {
             file = fc.showOpenDialog(null);
             if (file != null) {
                 String path = file.getAbsolutePath();
-//                for populating data for table the path should be relative:
+//                for populating icon path for table the path should be relative:
                 String base = "C:/Users/hmort/IdeaProjects/LeagueProject";
                 path = path.replace("\\", "/");
                 return new File(base).toURI().relativize(new File(path).toURI()).getPath();

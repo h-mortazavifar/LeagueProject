@@ -258,7 +258,7 @@ public class Controller implements Initializable {
 
     }
 
-    //    get Teams Data And Put It teams of leagues! You Know!
+    //    get Teams Data And Put It in teams of leagues! You Know!
     public void setAllDAtaForALeague() {
         playersDataImport.setVisible(false);
 
