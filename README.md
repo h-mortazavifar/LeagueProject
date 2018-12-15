@@ -16,10 +16,9 @@ In here you can make up to 6 football leagues with as many teams and players as 
 • Beautiful background slideshow
 
 #### It is still a work in progress and has some drawbacks:
+• Report generation not working yet
 
-• MatchMatch making is not working yet although UI is provided
-
-• Populating data for treeView from user input is not working although if you change it to static through the code it will work
+• Match making is not working yet although UI is provided
 
 ### A screenshot of it
 ![annotation2018-12-13172239](https://user-images.githubusercontent.com/14359326/49944242-3ee34f00-feff-11e8-8828-897d15f47736.png)
