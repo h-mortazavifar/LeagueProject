@@ -88,6 +88,7 @@ public class Controller implements Initializable {
     public VBox reportAccordionPane;
     public AnchorPane makingAMatchPane;
     public JFXButton matchHappend;
+    public StackPane forSlide;
     private int count = 0;
     private int numberOfTeams;
     private FileManager fileManagerClass = new FileManager();
@@ -117,7 +118,7 @@ public class Controller implements Initializable {
     //    private int slideshowCount;
 
     class TeamsInnerClass extends RecursiveTreeObject<TeamsInnerClass> {
-        SimpleObjectProperty icon;
+        SimpleObjectProperty<ImageView> icon;
         SimpleStringProperty teamName;
         SimpleStringProperty howManyPlayers;
         SimpleStringProperty numOfMatches;
@@ -132,7 +133,7 @@ public class Controller implements Initializable {
                                String goalsScored, String goalsAgainst, String won, String loss, String draw) {
             icon.setFitHeight(30);
             icon.setFitWidth(30);
-            this.icon = new SimpleObjectProperty(icon);
+            this.icon = new SimpleObjectProperty<>(icon);
             this.teamName = new SimpleStringProperty(teamName);
             this.howManyPlayers = new SimpleStringProperty(howManyPlayers);
             this.numOfMatches = new SimpleStringProperty(numOfMatches);
@@ -419,9 +420,9 @@ public class Controller implements Initializable {
             post[i] = new JFXComboBox[Integer.parseInt(teamPlayerNumbers[i].getText())];
             for (int j = 0; j < Integer.parseInt(teamPlayerNumbers[i].getText()); j++) {
                 HBox hBox = makingAHBox(content);
-                JFXComboBox getPlayersPost = new JFXComboBox();
+                JFXComboBox<Player.Post> getPlayersPost = new JFXComboBox<>();
                 getPlayersPost.setStyle("-fx-background-color:WHITE;");
-                getPlayersPost.setPrefWidth(150);
+                getPlayersPost.setPrefWidth(120);
                 getPlayersPost.setPromptText("پست بازیکن در زمین");
                 getPlayersPost.getItems().addAll(Player.Post.values());
                 int finalI1 = i;
@@ -437,12 +438,12 @@ public class Controller implements Initializable {
                 hBox.getChildren().add(getPlayersPost);
                 JFXTextField name = new JFXTextField();
                 name.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-                name.setPromptText("نام بازیکن شماره " + (j + 1) + " از تیم " + (i + 1));
+                name.setPromptText("نام بازیکن شماره " + (j + 1) + " از تیم " + teamNames[i].getText());
                 playerNames[i][j] = name;
                 hBox.getChildren().add(name);
                 JFXTextField lastName = new JFXTextField();
                 lastName.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-                lastName.setPromptText("فامیلی بازیکن شماره " + (j + 1) + " از تیم " + (i + 1));
+                lastName.setPromptText("فامیلی بازیکن شماره " + (j + 1) + " از تیم " + teamNames[i].getText());
                 playerLastNames[i][j] = lastName;
                 hBox.getChildren().add(lastName);
             }

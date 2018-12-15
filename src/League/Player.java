@@ -12,7 +12,16 @@ public class Player {
 //    }
 
     public enum Post {
-        front, defender, halfBack, goalKeeper;
+        front("حمله"), defender("دفاع"), halfBack("هافبک"), goalKeeper("دروازه بان");
+        private String persianPost;
+
+        Post(String persianPost) {
+            this.persianPost = persianPost;
+        }
+
+        public String getPersianPost() {
+            return persianPost;
+        }
     }
 
     public Player(String name, String lastName, String post) {

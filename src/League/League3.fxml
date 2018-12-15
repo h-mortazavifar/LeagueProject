@@ -11,6 +11,7 @@
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" stylesheets="@theme.css">
           <children>
+            <StackPane fx:id="forSlide" focusTraversable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" />
               <JFXButton fx:id="continueToTeams" buttonType="RAISED" graphicTextGap="5.0" layoutX="675.0" layoutY="108.0" onAction="#setNewLeagueVisible" style="-fx-background-color: aquamarine;" text="ایجاد لیگ جدید" textAlignment="CENTER">
                   <graphic>
                       <MaterialDesignIconView glyphName="PLUS" size="15" />
@@ -63,7 +64,7 @@
                               <Cursor fx:constant="HAND" />
                           </cursor>
                       </JFXButton>
-                      <JFXButton fx:id="folderBrowser" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" disable="true" onAction="#openFolderButton" onMouseClicked="#Close" style="-fx-background-color: white;" text="folder" textAlignment="CENTER">
+                      <JFXButton fx:id="folderBrowser" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#openFolderButton" onMouseClicked="#Close" style="-fx-background-color: white;" text="folder" textAlignment="CENTER">
                           <graphic>
                               <MaterialDesignIconView glyphName="FOLDER" size="15" />
                           </graphic>

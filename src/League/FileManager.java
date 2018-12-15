@@ -1,14 +1,11 @@
 package League;
 
 import javafx.beans.value.ChangeListener;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FileManager {
     //    for a Bigger and Better music player:
@@ -35,13 +32,15 @@ public class FileManager {
     public String getFolderPath() {
         String path;
         try {
-            FileChooser fc = new FileChooser();
-            file = fc.showOpenDialog(null);
+//            FileChooser fc = new FileChooser();
+            DirectoryChooser directoryChooser = new DirectoryChooser();
+            file = directoryChooser.showDialog(null);
             if (file != null) {
                 path = file.getParent();
                 path = path.replace("\\", "/");
                 return path;
             }
+            System.out.println(directoryChooser);
         } catch (Exception e) {
             e.printStackTrace();
         }
