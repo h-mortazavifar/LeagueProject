@@ -225,7 +225,7 @@ public class Controller implements Initializable {
         JFXTreeTableColumn<TeamsInnerClass, String> score = new JFXTreeTableColumn<>("S");
         score.setPrefWidth(20);
         score.setCellValueFactory(param -> param.getValue().getValue().score);
-        ImageView forIcon;
+        ImageView forIcon = null;
         String forTeamNames;
         String forNumberOfPlayers;
         String forNumberOfMatches;
@@ -237,7 +237,11 @@ public class Controller implements Initializable {
         String forGetDrawn;
 
         for (int i = 0; i < numberOfTeams; i++) {
-            forIcon = new ImageView(new Image(iconsAddress[i]));
+            try {
+                forIcon = new ImageView(new Image(iconsAddress[i]));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             forTeamNames = teamNames[i].getText();
             forNumberOfPlayers = String.valueOf(teamPlayerNumbers[i].getText());
             forNumberOfMatches = String.valueOf(leagues.get(whichIsLastClicked).getTeam(i).getNumOfMatches());

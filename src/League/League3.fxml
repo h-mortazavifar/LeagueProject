@@ -122,10 +122,11 @@
                   <Label fx:id="leagueStartDate" alignment="CENTER" contentDisplay="CENTER" layoutX="63.0" layoutY="35.0" style="-fx-font-size: 15;" text="تاریخ شروع" textAlignment="CENTER" />
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="makingAMatchPane" layoutX="126.0" layoutY="94.0" opacity="0.95" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;" visible="false">
+            <AnchorPane fx:id="makingAMatchPane" layoutX="126.0" layoutY="94.0" opacity="0.95" prefHeight="412.0" prefWidth="548.0" style="-fx-background-color: #f1f1f1; -fx-background-radius: 10;">
                <children>
-                  <JFXComboBox />
+                  <JFXComboBox layoutX="396.0" layoutY="368.0" />
                   <JFXButton fx:id="matchHappend" alignment="CENTER" buttonType="RAISED" layoutX="229.0" layoutY="367.0" prefHeight="25.0" prefWidth="93.0" style="-fx-background-color: #f1f1f1;" text="ایجاد" textAlignment="CENTER" />
+                  <JFXScrollPane fx:id="initializingPlayersScroll1" layoutX="27.0" prefHeight="351.0" prefWidth="493.0" style="-fx-background-color: #f1f1f1; -fx-alignment: center;" />
                </children>
             </AnchorPane>
             <VBox fx:id="reportAccordionPane" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="51.0" visible="false">

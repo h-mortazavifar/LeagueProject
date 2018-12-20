@@ -17,7 +17,7 @@ public class FileManager {
             file = fc.showOpenDialog(null);
             if (file != null) {
                 String path = file.getAbsolutePath();
-//                for populating icon path for table the path should be relative:
+//                for populating icon for table the path should be relative:
                 String base = "C:/Users/hmort/IdeaProjects/LeagueProject";
                 path = path.replace("\\", "/");
                 return new File(base).toURI().relativize(new File(path).toURI()).getPath();
