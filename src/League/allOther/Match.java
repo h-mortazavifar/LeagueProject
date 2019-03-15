@@ -1,14 +1,14 @@
 
-package League;
+package League.allOther;
 
-import static League.Controller.leagues;
+import static League.allOther.Controller.leagues;
 
 public class Match {
     private Team teamNoOne;
     private Team teamNoTwo;
     private Team loser;
     private Team winner;
-    private Player []playersTeamOne;
+    private Player[]playersTeamOne;
     private Player []playersTeamTwo;
     private League league;
 

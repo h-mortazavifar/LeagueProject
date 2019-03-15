@@ -1,4 +1,4 @@
-package League;
+package League.allOther;
 
 import javafx.beans.value.ChangeListener;
 import javafx.stage.DirectoryChooser;

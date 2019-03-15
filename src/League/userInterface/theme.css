@@ -1,6 +1,6 @@
 .root {
     -fx-background-radius: 20;
-    -fx-background-image: url("backs/background.jpg");
+    -fx-background-image: url("../backs/background.jpg");
     /*-fx-background-color: aquamarine;*/
     -fx-background-position: center center;
     -fx-background-repeat: stretch;

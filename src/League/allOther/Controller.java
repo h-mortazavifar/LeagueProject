@@ -1,4 +1,4 @@
-package League;
+package League.allOther;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
@@ -14,7 +14,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.Slider;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -29,7 +32,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.CubicCurve;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
@@ -46,7 +48,6 @@ public class Controller implements Initializable {
     public JFXDatePicker startDate;
     public JFXButton continueToTeams;
     public JFXButton closeButton;
-    public Tooltip tooltip;
     public JFXTextField nameOfLeague;
     public JFXButton goOnToSecondPage;
     public AnchorPane newLeaguePage;
@@ -129,7 +130,7 @@ public class Controller implements Initializable {
         SimpleStringProperty loss;
         SimpleStringProperty draw;
 
-        public TeamsInnerClass(@NotNull ImageView icon, String teamName, String howManyPlayers, String numOfMatches, String score,
+        public TeamsInnerClass(ImageView icon, String teamName, String howManyPlayers, String numOfMatches, String score,
                                String goalsScored, String goalsAgainst, String won, String loss, String draw) {
             icon.setFitHeight(30);
             icon.setFitWidth(30);
@@ -495,7 +496,7 @@ public class Controller implements Initializable {
         count++;*/
     }
 
-    private HBox makingAHBox(@NotNull VBox vBox) {
+    private HBox makingAHBox(VBox vBox) {
         HBox hBox = new HBox();
         hBox.setSpacing(20);
         hBox.setPadding(new Insets(10));
@@ -504,7 +505,7 @@ public class Controller implements Initializable {
         return hBox;
     }
 
-    private VBox makingAVBox(@NotNull Label ScrollBarTop, @NotNull JFXScrollPane initializingScroll) {
+    private VBox makingAVBox(Label ScrollBarTop, JFXScrollPane initializingScroll) {
         VBox content = new VBox();
         content.setPrefWidth(200);
         content.setSpacing(10);

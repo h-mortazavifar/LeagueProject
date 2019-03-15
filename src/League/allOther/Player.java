@@ -1,4 +1,4 @@
-package League;
+package League.allOther;
 
 public class Player {
     private int goals;

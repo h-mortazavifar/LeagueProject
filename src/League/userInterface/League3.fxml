@@ -7,7 +7,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.shape.CubicCurve?>
-<StackPane fx:id="dialogue" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="League.Controller">
+<StackPane fx:id="dialogue" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="League.allOther.Controller">
    <children>
       <AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-border-radius: 20; -fx-background-radius: 20;" stylesheets="@theme.css">
           <children>

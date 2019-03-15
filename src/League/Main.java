@@ -1,5 +1,6 @@
 package League;
 
+import League.allOther.Controller;
 import javafx.animation.*;
 import javafx.application.Application;
 import javafx.collections.ObservableList;
@@ -32,7 +33,7 @@ public class Main extends Application {
     private int width = 600;
     private ScannerLoader loader;
     private BlockingQueue<Image> images = new ArrayBlockingQueue(5);
-    private FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("League3.fxml"));
+    private FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("userInterface/League3.fxml"));
     private Controller controller;
 
     @Override
@@ -60,10 +61,10 @@ public class Main extends Application {
         primaryStage.initStyle(StageStyle.TRANSPARENT);
 //        round corners with a background:
         Rectangle rect = new Rectangle(800, 600);
-        rect.setArcHeight(60.0);
-        rect.setArcWidth(60.0);
+        rect.setArcHeight(30.0);
+        rect.setArcWidth(30.0);
         root.setClip(rect);
-        scene.getStylesheets().add(Main.class.getResource("theme.css").toExternalForm());
+        scene.getStylesheets().add(Main.class.getResource("userInterface/theme.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Purple League");
         primaryStage.getIcons().add(new Image("League/backs/Asset 13x.png"));
@@ -71,12 +72,12 @@ public class Main extends Application {
 
         //        for background slideshow if you don't want it you can comment the following lines:
 //         Start worker thread, and kick off first fade in.
-        loader = new ScannerLoader();
-        loader.start();
-        Image image = getNextImage();
-        if (image != null) {
-            startImage(image);
-        }
+//        loader = new ScannerLoader();
+//        loader.start();
+//        Image image = getNextImage();
+//        if (image != null) {
+//            startImage(image);
+//        }
     }
 
     /**
